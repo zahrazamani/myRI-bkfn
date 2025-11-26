@@ -1,0 +1,21 @@
+# Node
+node_modules/
+dist/
+build/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+.env
+
+# Database / RAG
+backend/chroma_db/
+backend/logs.db
+*.sqlite3
+*.db
+
+# OS
+.DS_Store
