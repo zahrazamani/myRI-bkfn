@@ -1,3 +1,6 @@
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 from rag import retrieve_documents
 import database
 import dotenv
@@ -70,9 +73,23 @@ async def clear_logs_endpoint():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+import os
+
+# ... (existing code)
+
+# Mount the frontend build directory
+frontend_dist = os.path.join(os.path.dirname(__file__), "../frontend/dist")
+if os.path.exists(frontend_dist):
+    app.mount("/assets", StaticFiles(directory=os.path.join(frontend_dist, "assets")), name="assets")
+
 @app.get("/")
-async def root():
-    return {"message": "RAG Backend is running"}
+async def serve_frontend():
+    index_path = os.path.join(frontend_dist, "index.html")
+    if os.path.exists(index_path):
+        return FileResponse(index_path)
+    return {"message": "Frontend not found. Did you run 'npm run build'?"}
 
 if __name__ == "__main__":
     import uvicorn
