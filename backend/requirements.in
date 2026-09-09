@@ -14,7 +14,7 @@ langchain
 langchain-google-genai
 langchain-community
 chromadb
-pypdf
+pymupdf           # ingest.py PDF extraction (cleaner than pypdf on these books)
 
 # Abuse control
 slowapi

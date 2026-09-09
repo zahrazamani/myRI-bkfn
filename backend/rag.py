@@ -1,7 +1,13 @@
 """Retrieval-augmented context lookup.
 
-Pipeline:  query -> embed (Google) -> cache check -> vector search (Chroma, k=FETCH_K)
+Pipeline:  query -> embed (Google) -> cache check
+           -> one vector search PER corpus tag (k=FETCH_K each), merged
            -> local cross-encoder rerank -> keep TOP_K -> cache store.
+
+Searching each corpus separately matters because the store is ~88% Tafsir
+al-Mizan: a single filtered search would hand the reranker almost nothing from
+a bot's own (much smaller) book collection. Per-tag search guarantees each
+corpus gets a fair FETCH_K candidates before the reranker picks the best.
 """
 import logging
 
@@ -28,6 +34,18 @@ _ALSO_READS: dict[str, str] = {
 }
 
 
+def _corpus_tags(chatbot_id: str) -> list[str]:
+    tags = [chatbot_id]
+    extra = _ALSO_READS.get(chatbot_id)
+    if extra:
+        tags.append(extra)
+    return tags
+
+
+def _cite(meta: dict) -> str:
+    return meta.get("citation") or meta.get("source") or "Unknown"
+
+
 def _get_vectorstore():
     global _embeddings, _vectorstore
     if _vectorstore is None:
@@ -42,11 +60,11 @@ def _get_vectorstore():
     return _vectorstore
 
 
-def _filter_for(chatbot_id: str):
-    extra = _ALSO_READS.get(chatbot_id)
-    if extra:
-        return {"$or": [{"chatbot_id": chatbot_id}, {"chatbot_id": extra}]}
-    return {"chatbot_id": chatbot_id}
+def _search_tag(vectorstore, embedding, query: str, tag: str, k: int) -> list:
+    flt = {"chatbot_id": tag}
+    if embedding is not None:
+        return vectorstore.similarity_search_by_vector(embedding, k=k, filter=flt)
+    return vectorstore.similarity_search(query, k=k, filter=flt)
 
 
 def retrieve_documents(query: str, chatbot_id: str) -> dict:
@@ -67,23 +85,27 @@ def retrieve_documents(query: str, chatbot_id: str) -> dict:
     if cached:
         return cached
 
+    # One search per corpus so the small book collections aren't crowded out by
+    # the 37k-passage Tafsir corpus; then merge and let the reranker choose.
+    candidates: list = []
+    seen: set = set()
     try:
-        if embedding is not None:
-            docs = vectorstore.similarity_search_by_vector(
-                embedding, k=config.RAG_FETCH_K, filter=_filter_for(chatbot_id)
-            )
-        else:
-            docs = vectorstore.similarity_search(
-                query, k=config.RAG_FETCH_K, filter=_filter_for(chatbot_id)
-            )
+        for tag in _corpus_tags(chatbot_id):
+            for d in _search_tag(vectorstore, embedding, query, tag, config.RAG_FETCH_K):
+                key = (d.metadata.get("source"), d.metadata.get("page"), d.page_content[:100])
+                if key in seen:
+                    continue
+                seen.add(key)
+                candidates.append(d)
     except Exception as exc:
         log.error("vector search failed: %s", exc)
         return {"context": "", "sources": [], "cache": "error"}
 
-    docs = reranker.rerank(query, docs, config.RAG_TOP_K)
+    docs = reranker.rerank(query, candidates, config.RAG_TOP_K)
 
-    context = "\n\n---\n\n".join(d.page_content for d in docs)
-    sources = list(dict.fromkeys(d.metadata.get("source", "Unknown") for d in docs))
+    # Label each passage with its citation so the model can attribute accurately.
+    context = "\n\n---\n\n".join(f"[{_cite(d.metadata)}]\n{d.page_content}" for d in docs)
+    sources = list(dict.fromkeys(_cite(d.metadata) for d in docs))
 
     rag_cache.put(chatbot_id, query, embedding, context, sources)
     return {"context": context, "sources": sources, "cache": "miss"}
