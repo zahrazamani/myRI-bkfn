@@ -1,0 +1,28 @@
+# Human-editable direct dependencies. The deploy/Dockerfile installs the fully
+# pinned requirements.txt, not this file. After changing anything here:
+#   pip install -r requirements.in && pip freeze | grep -v "^-e " > requirements.txt
+
+fastapi
+uvicorn[standard]
+python-multipart
+python-dotenv
+pydantic
+
+# LLM + RAG
+google-genai
+langchain
+langchain-google-genai
+langchain-community
+chromadb
+pypdf
+
+# Abuse control
+slowapi
+httpx
+
+# "Bring it to life" runtime illustration (kid_art.py) resizes the model output
+Pillow
+
+# Local reranker (multilingual cross-encoder). Pulls torch (~large). The app
+# still runs without it - reranking just falls back to vector order.
+sentence-transformers

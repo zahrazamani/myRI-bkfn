@@ -1,0 +1,694 @@
+{
+  "style": {
+    "aspect_ratio": "4:3",
+    "anchor_prompt": "A single sample children's storybook illustration to lock an art style. Subject: a warm desert valley at golden hour with a rocky hill and a few birds in the sky. Style: painterly digital gouache with soft visible brush texture, rich but harmonious saturated color, gentle cinematic light, a sense of wonder and quiet adventure, clean composition with one clear focal point, suitable for ages 10 to 15. Absolutely no text, letters, words, numbers, watermarks or signatures anywhere. No people.",
+    "base": "Children's storybook illustration for ages 10 to 15, painterly digital gouache with soft visible brush texture, rich harmonious saturated color, gentle cinematic lighting, a sense of wonder and adventure, clean composition with one clear focal point.",
+    "rules": "Match the art style, palette, brushwork and rendering of the reference image exactly; change only the scene described. Absolutely no text, letters, words, numbers, watermarks or signatures anywhere in the image. Do NOT depict any prophet, messenger, angel, imam, or identifiable holy or historical figure. Show human beings only as small distant silhouettes, seen from behind, hooded, or merely implied by objects, clothing and shadows. No faces of named holy figures, ever. No modern objects. No blood, no gore, no frightening or violent imagery. Keep it gentle, awe-inspiring and age-appropriate. Depict only animals the Qur'an names by word (ant, ape, bee, bird, calf, camel, cattle, cow, crow, dog, donkey, elephant, ewe, fish, fly, frog, goat, hoopoe, horse, lice, lion, locust, mosquito, moth, mule, pig, quail, sheep, snake, spider, wolf); never add any other animal species to a scene."
+  },
+  "stories": {
+    "cave-spider": {
+      "title": "The Weaver's Secret Shield",
+      "animal": "The Cave Spider",
+      "quran": "Surah at-Tawbah 9:40 - the Cave of Thawr",
+      "scenes": [
+        {
+          "id": "cave-spider-01",
+          "caption": "A moonlit desert path winding toward a dark mountain",
+          "prompt": "A vast moonlit desert of pale sand and dark volcanic rock. A narrow footpath winds toward a large shadowed mountain. Two very small distant traveller silhouettes are far up the path, backs turned, wrapped in cloaks. Cool blue night palette with warm starlight. Wide establishing shot."
+        },
+        {
+          "id": "cave-spider-02",
+          "caption": "The low cave mouth at night under the stars",
+          "prompt": "A low, narrow cave opening in a rugged mountainside at night. A brilliant field of stars and a thin crescent moon above. The cave interior is pure black. Silent, still, expectant mood. No people."
+        },
+        {
+          "id": "cave-spider-03",
+          "caption": "A small spider arrives at the cave entrance",
+          "prompt": "Close view of a small brown-and-cream garden spider at the rocky edge of a cave entrance at night, lowering itself on a single glinting silk thread. Soft moon rim-light on the rock. Shallow depth of field. No people."
+        },
+        {
+          "id": "cave-spider-04",
+          "caption": "The spider weaves a web across the cave mouth",
+          "prompt": "A spider spinning a large, intricate orb web across the mouth of a cave, moonlight catching the radiating silk strands like silver. View from just inside the cave looking out at the night desert. No people."
+        },
+        {
+          "id": "cave-spider-05",
+          "caption": "A pair of doves nest on a ledge by the entrance",
+          "prompt": "Two soft grey doves settling onto a shallow nest of twigs on a rock ledge beside a cave entrance, one pale egg visible. Pre-dawn light, tender and calm. No people."
+        },
+        {
+          "id": "cave-spider-06",
+          "caption": "The finished web glistens at dawn, dew on the threads",
+          "prompt": "A complete spider web stretched across an entire cave mouth at first light, every thread beaded with dew and glowing gold in the sunrise. The web looks ancient and undisturbed. No people."
+        },
+        {
+          "id": "cave-spider-07",
+          "caption": "Armed riders approach the foot of the mountain",
+          "prompt": "Seen from inside the cave, past the glowing web: a group of armed riders on horseback far below at the base of the mountain, dust rising behind them in the morning light. Tense but not gory. Riders tiny and faceless in the distance."
+        },
+        {
+          "id": "cave-spider-08",
+          "caption": "The pursuers peer at the untouched web and turn away",
+          "prompt": "View from deep inside a dim cave toward the bright entrance. Two or three shadowy human silhouettes stand just outside, seen only as dark shapes against the light, looking at an intact dew-covered spider web and two calm nesting doves. Their body language shows them shrugging and turning to leave. No faces."
+        },
+        {
+          "id": "cave-spider-09",
+          "caption": "The quiet interior of the cave, a shaft of light",
+          "prompt": "The calm dim interior of a stone cave, a single soft shaft of daylight falling from the entrance onto the sandy floor where two folded travelling cloaks rest on a rock. Peaceful, safe, sacred stillness. No people."
+        },
+        {
+          "id": "cave-spider-10",
+          "caption": "Morning light floods the valley, birds rising",
+          "prompt": "Golden morning light pouring over a wide desert valley seen from a mountain cave mouth, flocks of small birds rising into a warm glowing sky. A feeling of relief, safety and gratitude. No people."
+        }
+      ]
+    },
+    "cave-dog": {
+      "title": "The Loyal Guardian's Vigil",
+      "animal": "The Dog of the Companions of the Cave",
+      "quran": "Surah al-Kahf 18:9-26 - the People of the Cave (Ashab al-Kahf)",
+      "scenes": [
+        {
+          "id": "cave-dog-01",
+          "caption": "Young companions walk a hill road at sunset with their dog",
+          "prompt": "A small group of young people seen from behind, in simple hooded robes, walking up a golden hillside road at sunset. A tan short-haired dog trots happily beside them. Long shadows, warm light, sense of a journey beginning. Faces not visible."
+        },
+        {
+          "id": "cave-dog-02",
+          "caption": "The group enters a great mountain cave; the dog pauses at the threshold",
+          "prompt": "Seen from behind and above: cloaked young figures stepping into the wide dark mouth of a mountain cave. A tan dog stands at the very threshold, half in light, half in shadow, looking back over its shoulder. Faces hidden."
+        },
+        {
+          "id": "cave-dog-03",
+          "caption": "The dog lies across the entrance, forelegs outstretched, on guard",
+          "prompt": "A tan short-haired dog lying directly across the entrance of a cave with its forelegs stretched out in front of it, head up, eyes alert and watchful, guarding. Warm daylight outside, cool shadow inside. Faithful, noble mood. No people."
+        },
+        {
+          "id": "cave-dog-04",
+          "caption": "A sunbeam crosses the cave as years pass",
+          "prompt": "The interior of a cave shown as a single image split by soft transition: a beam of sunlight from the entrance falls on the left side, then on the right side, suggesting long years passing. Dust motes in the light. The dog's silhouette rests near the entrance. No visible people."
+        },
+        {
+          "id": "cave-dog-05",
+          "caption": "The sleepers rest wrapped in cloaks; the dog watches over them",
+          "prompt": "Inside a dim cave, several still human forms lie wrapped head to toe in earth-coloured cloaks on the sandy floor, faces completely covered and turned away. A tan dog lies among them, head raised, keeping watch. Peaceful, protected, reverent. No faces."
+        },
+        {
+          "id": "cave-dog-06",
+          "caption": "The mountainside outside moves through the seasons",
+          "prompt": "The rocky slope outside a cave shown across four seasons blended into one panoramic image: fresh green, golden summer, red autumn, quiet snow. The cave mouth is a constant dark shape. No people."
+        },
+        {
+          "id": "cave-dog-07",
+          "caption": "An ancient, unfamiliar silver coin in an open palm",
+          "prompt": "Close-up of a single worn ancient silver coin resting in an open human palm, the rest of the arm and person out of frame. A blurred sunlit marketplace behind. The coin looks old-fashioned and strange. Only the hand is visible."
+        },
+        {
+          "id": "cave-dog-08",
+          "caption": "The town below has changed, with new rooftops and a dome",
+          "prompt": "Looking out from a mountain cave mouth toward a town in the valley below that now has unfamiliar rooftops, gardens and a single domed building. Soft afternoon light. A feeling that a great deal of time has passed. Tiny distant figures only."
+        },
+        {
+          "id": "cave-dog-09",
+          "caption": "Bright light and dust as the sleepers wake; the dog stands alert",
+          "prompt": "Inside a cave filled with swirling dust motes and a flood of bright daylight from the entrance. Cloaked forms are just beginning to stir on the floor. A tan dog stands at the entrance, tail up, ears forward, facing the light. Faces not shown."
+        },
+        {
+          "id": "cave-dog-10",
+          "caption": "A simple stone marker and garden by the cave, visitors far off",
+          "prompt": "A modest rough stone marker and a small green garden beside a mountain cave entrance in gentle evening light. A few very small, distant figures approach respectfully along the path. Calm, honoured, gentle mood."
+        }
+      ]
+    },
+    "hoopoe": {
+      "title": "The Royal Messenger's Ancient News",
+      "animal": "The Hoopoe of Solomon",
+      "quran": "Surah an-Naml 27:20-28 - the Hoopoe and the Queen of Sheba",
+      "scenes": [
+        {
+          "id": "hoopoe-01",
+          "caption": "A vivid hoopoe with its crest raised, perched on a carved pillar",
+          "prompt": "A striking hoopoe bird with cinnamon plumage, black-and-white barred wings, and its tall crown-like crest fully raised, perched on an ornately carved pale stone pillar. Bright clear daylight, richly detailed feathers. No people."
+        },
+        {
+          "id": "hoopoe-02",
+          "caption": "A grand open-air court of birds; an empty ornate throne at the top",
+          "prompt": "A vast open-air marble court in ancient style, filled with birds of every kind gathered in orderly rows on wide steps. At the very top stands a large empty ornate golden throne, unoccupied, catching the sun. No human figures at all."
+        },
+        {
+          "id": "hoopoe-03",
+          "caption": "One gap among the assembled birds, a shaft of light on the empty spot",
+          "prompt": "The same marble court of assembled birds, but with one clear empty gap in the front rank where a bird is missing. A soft shaft of sunlight falls exactly on the vacant spot. The golden throne behind remains empty. No people."
+        },
+        {
+          "id": "hoopoe-04",
+          "caption": "The hoopoe flies high over mountains and green valleys, searching",
+          "prompt": "A hoopoe in strong flight, wings spread wide, high above a landscape of dry mountains giving way to green river valleys far below. Big sky, adventurous mood, tiny bird against a huge world. No people."
+        },
+        {
+          "id": "hoopoe-05",
+          "caption": "From the air: a golden city with terraced gardens and a great palace",
+          "prompt": "A sweeping aerial view from a bird's height of a golden ancient city in a valley, with terraced gardens, palm groves, canals and a large columned palace at its centre. Warm afternoon light. Figures too small and distant to see."
+        },
+        {
+          "id": "hoopoe-06",
+          "caption": "The hoopoe glides down toward the palace carrying a sealed letter",
+          "prompt": "A hoopoe gliding downward with a small rolled scroll sealed with wax held carefully in its beak, the rooftops and courtyards of a grand ancient palace rising to meet it. Late golden light. No people."
+        },
+        {
+          "id": "hoopoe-07",
+          "caption": "The sealed scroll rests on a polished throne-room floor",
+          "prompt": "A single rolled scroll sealed with a wax seal lying on a vast polished stone floor inlaid with patterns, in a columned throne room. An empty ornate throne stands in soft focus behind it. Morning light through high windows. No people."
+        },
+        {
+          "id": "hoopoe-08",
+          "caption": "The court of Sheba debates around the scroll",
+          "prompt": "A richly decorated ancient throne room where a group of finely dressed courtiers stand in a loose circle around a small scroll on a table, gesturing in discussion. All figures are seen from behind or in profile shadow, faces turned away or indistinct. Opulent, thoughtful mood."
+        },
+        {
+          "id": "hoopoe-09",
+          "caption": "The hoopoe flies home over the desert at sunset",
+          "prompt": "A hoopoe flying steadily across a wide orange desert sky at sunset, heading toward distant blue hills. Streaks of cloud, a single evening star. Peaceful sense of a mission accomplished. No people."
+        },
+        {
+          "id": "hoopoe-10",
+          "caption": "Back before the assembly of birds, the empty throne still waiting",
+          "prompt": "The hoopoe returned to its carved pillar before the great marble court of birds, every bird turned attentively toward it as if listening. The large ornate throne at the top of the steps is still empty and sunlit. No human figures."
+        }
+      ]
+    },
+    "raven": {
+      "title": "The First Lesson of the Wise Crow",
+      "animal": "The Raven of the Sons of Adam",
+      "quran": "Surah al-Ma'idah 5:27-31 - the two sons of Adam",
+      "scenes": [
+        {
+          "id": "raven-01",
+          "caption": "A wide barren land at dusk, two distant figures apart on a ridge",
+          "prompt": "A wide, bare, wind-swept landscape of brown earth and low hills at dusk. On a distant ridge stand two lone human figures, far apart, both seen from behind as small silhouettes, the empty space between them heavy with tension. Muted, somber palette."
+        },
+        {
+          "id": "raven-02",
+          "caption": "Two offerings on flat stones on a hilltop",
+          "prompt": "On a flat hilltop altar of stacked stones, two offerings side by side: one a neat golden bundle of ripe wheat sheaves, the other a small, poor scattering of dull grain and withered stalks. Low grey light, quiet and serious. No people."
+        },
+        {
+          "id": "raven-03",
+          "caption": "A lone figure kneels beside a still, cloak-covered form",
+          "prompt": "A single human figure seen entirely from behind, kneeling on bare dark ground with head bowed, beside a still form covered completely by a plain cloak. Vast empty plain around them, low heavy sky. Grief in the posture. No face visible."
+        },
+        {
+          "id": "raven-04",
+          "caption": "A glossy black raven lands on a rock nearby",
+          "prompt": "A large glossy blue-black raven landing on a weathered grey rock on an empty plain, wings half spread, head tilted, one bright eye watching something off-frame. Soft overcast light on iridescent feathers. No people."
+        },
+        {
+          "id": "raven-05",
+          "caption": "A second raven lies still on the ground; the living one approaches",
+          "prompt": "On bare earth, one raven lies motionless with feathers ruffled by the wind, while a second living raven steps cautiously toward it, head lowered. Melancholy, gentle, not gruesome. Grey plain, pale sky. No people."
+        },
+        {
+          "id": "raven-06",
+          "caption": "The raven digs a hollow in the dark earth",
+          "prompt": "A black raven vigorously scratching and digging a shallow hollow in dark crumbling soil with its beak and claws, small clods of earth flying. Focused, purposeful energy. Close low angle. No people."
+        },
+        {
+          "id": "raven-07",
+          "caption": "The raven pushes soil over the hollow, making a small mound",
+          "prompt": "A black raven using its beak to push and rake loose soil over a shallow hole, a small neat mound of earth forming. Quiet, tender, instructive moment. Soft light. No people."
+        },
+        {
+          "id": "raven-08",
+          "caption": "The kneeling figure watches the raven, one hand lifted to the head",
+          "prompt": "A human figure seen from behind, kneeling on the plain, watching a distant raven at a small earth mound, one hand raised to the side of the head in dawning realisation. Big empty sky. Face never visible."
+        },
+        {
+          "id": "raven-09",
+          "caption": "A fresh earth mound with a single rough headstone on the plain",
+          "prompt": "A single fresh grave mound of dark earth with one plain rough upright stone at its head, alone on a wide empty plain under a low evening sun. Solemn, dignified, calm. No people."
+        },
+        {
+          "id": "raven-10",
+          "caption": "The wide plain at last light, the raven flying off against a huge sky",
+          "prompt": "A vast plain at the last moment of dusk, a single raven flying away small and dark against an enormous glowing sky, a low earth mound visible below. A sense of a hard lesson learned and quiet peace. No people."
+        }
+      ]
+    },
+    "elephant": {
+      "title": "The Mighty Elephant's Sacred Refusal",
+      "animal": "The Elephant of the Army of the Elephant",
+      "quran": "Surah al-Fil 105 - the Year of the Elephant",
+      "scenes": [
+        {
+          "id": "elephant-01",
+          "caption": "A vast army with a towering war elephant marches across the desert",
+          "prompt": "A huge ancient army marching across a wide desert plain toward distant hills, led by one enormous war elephant draped in ornate red-and-gold armour. Banners, dust, scale and menace, but no clear faces - all soldiers tiny and distant. Dramatic sky."
+        },
+        {
+          "id": "elephant-02",
+          "caption": "Close-up of the great armoured elephant, handlers small below",
+          "prompt": "A close, low-angle view of a giant war elephant in ornate ceremonial armour and coloured cloth, tusks capped with metal, small handlers at its feet seen only from behind. The elephant's eye is calm and thoughtful. Warm dusty light."
+        },
+        {
+          "id": "elephant-03",
+          "caption": "The army halts at a wide valley; a small plain stone sanctuary far off",
+          "prompt": "An ancient army halted in a long line at the edge of a broad valley. Far across the valley, tiny in the distance, stands a simple cube-shaped stone sanctuary alone on open ground. Morning haze, sense of awe and hesitation. Distant faceless figures only."
+        },
+        {
+          "id": "elephant-04",
+          "caption": "The huge elephant kneels in the sand and refuses to advance",
+          "prompt": "An enormous war elephant lowered onto its front knees in the desert sand, head turned away from the direction of travel, refusing to move. Small handler silhouettes pull uselessly on ropes and goads. Determined, gentle stubbornness. No faces."
+        },
+        {
+          "id": "elephant-05",
+          "caption": "Turned any other way, the elephant walks eagerly",
+          "prompt": "The same great war elephant rising and striding briskly and happily in the opposite direction, away from the distant stone sanctuary, trunk lifted. Tiny frustrated handler silhouettes hurrying after it. Almost humorous, warm light. No faces."
+        },
+        {
+          "id": "elephant-06",
+          "caption": "A strange shadow spreads as tiny birds appear on the horizon",
+          "prompt": "A vast desert army below, and across the whole sky a strange spreading shadow as an immense distant cloud of tiny birds gathers on the horizon. Ominous but not gory. Cool light dimming. Soldiers are distant specks."
+        },
+        {
+          "id": "elephant-07",
+          "caption": "Great flocks of small birds fill the sky, each carrying tiny stones",
+          "prompt": "The entire sky filled with countless small swift birds flying in dense flocks, each bird carrying tiny pebbles in its beak and claws. Seen from below, dramatic and awe-inspiring. Shafts of light between the flocks. No people in frame."
+        },
+        {
+          "id": "elephant-08",
+          "caption": "Small stones streak down; the army scatters in the dust",
+          "prompt": "Streaks of tiny falling stones raining from a bird-filled sky over a desert, an ancient army breaking apart and fleeing in billowing dust far below. Chaos and scale, but no blood and no visible faces - only distant running silhouettes."
+        },
+        {
+          "id": "elephant-09",
+          "caption": "The empty plain after: abandoned banners, drifting sand, the elephant alone",
+          "prompt": "A quiet desert plain in the aftermath: fallen banners half-buried in drifting sand, scattered abandoned gear, and the great war elephant standing calm and alone, armour dusty, in soft grey light. Still, sober, peaceful. No people."
+        },
+        {
+          "id": "elephant-10",
+          "caption": "Calm golden dawn over the untouched stone sanctuary",
+          "prompt": "A calm golden sunrise over a simple untouched cube-shaped stone sanctuary standing alone on an open plain, a few birds circling peacefully high in a clear sky. Deep sense of protection and reverence. No people."
+        }
+      ]
+    },
+    "ant": {
+      "title": "Tiny Queen's Urgent Whisper",
+      "animal": "The Ant of the Valley",
+      "quran": "Surah an-Naml 27:18-19 - Solomon and the Valley of the Ants",
+      "scenes": [
+        {
+          "id": "ant-01",
+          "caption": "A sweeping low view of a dry valley full of anthills and ant trails",
+          "prompt": "A sweeping close-to-the-ground view along a warm dry valley floor dotted with many anthills and crisscrossed by busy trails of ants carrying seeds. Golden late-afternoon light, blades of dry grass towering like trees. No people."
+        },
+        {
+          "id": "ant-02",
+          "caption": "On the far horizon, a long column of marchers raising a wall of dust",
+          "prompt": "The same valley, but on the far horizon a long column of marching figures and horses raises a huge wall of golden dust. The column is tiny and distant, no faces, just scale and movement. Foreground: an alert ant on a pebble."
+        },
+        {
+          "id": "ant-03",
+          "caption": "A single ant rears up on a pebble, antennae forward, sensing the ground",
+          "prompt": "Extreme close-up of a single ant reared up on its back legs on top of a smooth pebble, antennae stretched forward, clearly sensing a tremor in the ground. Dramatic low light, shallow focus, heroic little pose. No people."
+        },
+        {
+          "id": "ant-04",
+          "caption": "The ant turns back to the colony; other ants stop to listen",
+          "prompt": "A close macro view of one ant turned back toward a crowd of other ants on the trail, all of them paused and facing it with antennae raised as if listening to an urgent warning. Warm light, sense of a speech being given. No people."
+        },
+        {
+          "id": "ant-05",
+          "caption": "Streams of ants pour back toward their hills carrying eggs and grain",
+          "prompt": "Many ants hurrying in busy streams back toward their anthills, workers carrying white eggs and seeds, a sense of orderly urgent evacuation. Macro scale, warm light, dust in the air. No people."
+        },
+        {
+          "id": "ant-06",
+          "caption": "Close-up of the anthill entrance, ants funnelling safely underground",
+          "prompt": "A close view of a sandy anthill entrance mound with a stream of ants funnelling down into the dark safe opening, the last few workers slipping inside. Low golden light. No people."
+        },
+        {
+          "id": "ant-07",
+          "caption": "Extreme low angle: a vast shadow passes over the anthill",
+          "prompt": "Extreme worm's-eye view from beside an anthill: the dusty ground fills most of the frame and a vast soft shadow sweeps across it as something enormous passes by, unseen above the top edge of the picture. No visible people or figures, only the shadow and dust."
+        },
+        {
+          "id": "ant-08",
+          "caption": "Warm light returns; the distant column pauses, a gentle amusement",
+          "prompt": "The valley bathed in returning warm light. In the middle distance the marching column has paused, still tiny and faceless, and there is a soft, almost smiling gentleness in the whole scene, as if someone kind has overheard the ant. Foreground anthill safe and busy. No clear figures."
+        },
+        {
+          "id": "ant-09",
+          "caption": "Cutaway of cozy underground tunnels, the whole colony safe, the queen among them",
+          "prompt": "A warm cross-section cutaway of an ant nest underground: cozy rounded chambers and tunnels lit with amber glow, the whole colony gathered safely together, a slightly larger queen ant among the workers and eggs. Snug, reassuring, storybook detail. No people."
+        },
+        {
+          "id": "ant-10",
+          "caption": "The valley quiet again, ants re-emerging into golden evening light",
+          "prompt": "The valley calm again at golden hour, ants streaming back out of their anthill into soft evening light, the wall of dust settling on the far horizon. Relief, gratitude, gentle beauty. No people."
+        }
+      ]
+    },
+    "camel": {
+      "title": "The Test of the Sacred Spring",
+      "animal": "The She-Camel of Salih",
+      "quran": "Surah al-A'raf 7:73-79, Surah Hud 11:64-68, Surah ash-Shu'ara 26:141-159 - the people of Thamud",
+      "scenes": [
+        {
+          "id": "camel-01",
+          "caption": "The cliff-city of Thamud carved into red mountains",
+          "prompt": "A grand ancient city of homes and doorways carved directly into towering rose-red sandstone cliffs, under a wide dry sky. Empty winding paths between the rock facades. Warm low sun. No people. Awe and quiet."
+        },
+        {
+          "id": "camel-02",
+          "caption": "A crowd gathers before a great sealed rock",
+          "prompt": "A large boulder of pale stone standing in a natural amphitheatre of red cliffs. A crowd of small distant robed silhouettes, backs to us, faces the rock. One lone hooded silhouette stands apart on a ledge, seen from behind, a plain staff in hand. Golden dust in the air."
+        },
+        {
+          "id": "camel-03",
+          "caption": "The rock splits open with light and dust",
+          "prompt": "The great pale boulder cracking apart down the middle, a brilliant shaft of warm light and a burst of dust pouring from the opening. The crowd silhouettes lean back. Dramatic but gentle, wondrous. No people close up."
+        },
+        {
+          "id": "camel-04",
+          "caption": "A magnificent she-camel emerges from the cleft rock",
+          "prompt": "A large, noble pale-golden she-camel stepping out of a glowing cleft in a pale rock face, dust settling around her hooves, soft light on her coat. She is calm and dignified. No people. Sense of miracle."
+        },
+        {
+          "id": "camel-05",
+          "caption": "The she-camel drinks the whole spring dry",
+          "prompt": "A wide stone desert spring and pool at the edge of the cliff-city. The great she-camel drinks deeply; the pool is nearly empty. Herds of small goats and sheep wait at a distance with tiny distant herder silhouettes. Late afternoon light."
+        },
+        {
+          "id": "camel-06",
+          "caption": "The next day the water returns and the camel grazes",
+          "prompt": "The same stone spring now brimming full and clear at sunrise, villagers' small flocks drinking. The she-camel grazes peacefully on sparse desert shrubs nearby. Tiny distant robed silhouettes on the rooftops. Calm, generous mood."
+        },
+        {
+          "id": "camel-07",
+          "caption": "Schemers watch the camel from behind the rocks",
+          "prompt": "Two crouching hooded silhouettes hidden behind red boulders at dusk, watching the distant she-camel at the spring. Long shadows, uneasy violet light. The figures are shadowy and small, no faces. Tense but not frightening."
+        },
+        {
+          "id": "camel-08",
+          "caption": "At dawn the spring is empty and the camel is gone",
+          "prompt": "The stone spring at grey dawn, still and abandoned, a coiled rope dropped on the sand and a single line of camel hoofprints leading away into the dunes. No animal, no blood, no people. Heavy silence, loss."
+        },
+        {
+          "id": "camel-09",
+          "caption": "A dark sky rolls toward the cliff-homes",
+          "prompt": "A towering wall of dark red and bruise-purple storm cloud and dust sweeping across the desert toward the carved cliff-city. Wind bending the few desert plants. No people. Ominous but painterly, restrained."
+        },
+        {
+          "id": "camel-10",
+          "caption": "Silent empty doorways and hoofprints filling with sand",
+          "prompt": "The carved cliff-city afterward: rows of empty dark doorways in the red rock, utterly silent, and in the foreground a single trail of camel hoofprints slowly filling with wind-blown sand. Soft clear dawn light. Stillness and reflection."
+        }
+      ]
+    },
+    "cow": {
+      "title": "The Cow of a Hundred Questions",
+      "animal": "The Cow of Bani Israel",
+      "quran": "Surah al-Baqarah 2:67-73",
+      "scenes": [
+        {
+          "id": "cow-01",
+          "caption": "An ancient town at night with one lit window",
+          "prompt": "A cluster of flat-roofed mud-brick houses at night under stars, a single warm lamplit window. A far-off doorway with a small shrouded shape resting on the ground, only implied, very distant. Quiet, solemn, gentle. No visible faces."
+        },
+        {
+          "id": "cow-02",
+          "caption": "A crowd argues in the dusty square",
+          "prompt": "A dusty town square at morning full of small robed silhouettes turned toward one calm hooded silhouette standing apart, seen from behind. Hands raised in questioning gestures among the crowd. Dust and warm light. No close faces."
+        },
+        {
+          "id": "cow-03",
+          "caption": "Herds of cattle graze by the river",
+          "prompt": "Lush green pasture beside a wide slow river, many brown and cream cattle grazing, distant palm trees, tiny far-off herder silhouettes. Bright peaceful late-morning light."
+        },
+        {
+          "id": "cow-04",
+          "caption": "One radiant golden cow stands apart in a barley field",
+          "prompt": "A single luminous golden-yellow cow standing alone in a sunlit field of ripe golden barley, sleek and healthy, never yoked. Warm glowing light picks out her coat. No people. A sense of something special and set apart."
+        },
+        {
+          "id": "cow-05",
+          "caption": "The golden cow is led through the town gate",
+          "prompt": "The bright golden cow led on a simple rope through an arched mud-brick town gate, small robed silhouettes watching from the rooftops and shadows. Warm afternoon light, dust motes."
+        },
+        {
+          "id": "cow-06",
+          "caption": "The cow stands calm in a ring of onlookers at dawn",
+          "prompt": "The golden cow standing quietly at the centre of a wide ring of distant robed silhouettes in the town square at pale dawn. A folded cloth bundle rests on a low stone. Hushed, expectant, gentle mood. No violence, nothing graphic."
+        },
+        {
+          "id": "cow-07",
+          "caption": "A quiet miracle of light in the square",
+          "prompt": "The town square filled with soft golden dawn light and drifting motes; the distant shrouded shape now sitting upright wrapped in pale cloth, seen from far behind, robed silhouettes stepping back in awe. Luminous, tender, reverent. No faces, nothing frightening."
+        },
+        {
+          "id": "cow-08",
+          "caption": "The crowd disperses in silence",
+          "prompt": "Small robed silhouettes walking away in ones and twos down dusty lanes between mud-brick walls, long morning shadows. Reflective, calm. No faces."
+        },
+        {
+          "id": "cow-09",
+          "caption": "The golden cow grazes again by the river",
+          "prompt": "The luminous golden cow grazing peacefully on the green riverbank once more, morning mist lifting off the water, a small pale wading bird at the shallows. Serene, warm."
+        },
+        {
+          "id": "cow-10",
+          "caption": "The pasture and river at golden hour",
+          "prompt": "Wide view of the green pasture and river at golden hour, cattle drinking at the water's edge, the town roofs warm in the distance. Calm, hopeful, glowing light. No people."
+        }
+      ]
+    },
+    "calf": {
+      "title": "The Statue That Could Not Speak",
+      "animal": "The Golden Calf of the Samiri",
+      "quran": "Surah Ta-Ha 20:83-98, Surah al-A'raf 7:148-154",
+      "scenes": [
+        {
+          "id": "calf-01",
+          "caption": "A desert camp at the foot of a bare mountain",
+          "prompt": "A vast camp of pale tents on desert gravel at the foot of a steep bare mountain, a single tiny point of light high on the dark peak. Dusk, first stars. No people visible. Waiting, uncertain mood."
+        },
+        {
+          "id": "calf-02",
+          "caption": "People pile golden jewellery onto a cloth",
+          "prompt": "A large spread cloth on the sand heaped with golden bracelets, rings and ornaments, glinting by torchlight. Small robed silhouettes around the edges adding to the pile, seen from behind. Warm firelight, long shadows."
+        },
+        {
+          "id": "calf-03",
+          "caption": "Molten gold pours into a mould",
+          "prompt": "A glowing clay furnace at night, a stream of bright molten gold pouring into a large mould in the sand. One lone hooded silhouette works alone, seen from behind, rim-lit orange. Sparks and heat-shimmer. Secretive."
+        },
+        {
+          "id": "calf-04",
+          "caption": "The finished golden calf statue on a stone platform",
+          "prompt": "A life-size gleaming solid-gold statue of a young calf standing on a low stone platform, polished and unnervingly still, catching cold dawn light. Empty ground around it. No people. Something hollow and wrong about its stillness."
+        },
+        {
+          "id": "calf-05",
+          "caption": "Crowds bow toward the golden calf",
+          "prompt": "Rows of robed silhouettes kneeling and bowing toward the golden calf statue on its platform, all backs to us, torches planted in the sand, drifting smoke. Night. Uneasy, misled devotion, but nothing frightening."
+        },
+        {
+          "id": "calf-06",
+          "caption": "The calf casts a long hollow shadow in the wind",
+          "prompt": "The golden calf statue at blue dusk casting an unnaturally long, hollow shadow across the rippled sand, a thin curl of dust drifting from its open mouth as the wind passes. Empty, eerie-calm, painterly. No people."
+        },
+        {
+          "id": "calf-07",
+          "caption": "A stern figure returns down the mountain path",
+          "prompt": "A lone hooded silhouette descending a steep rocky mountain path at first light, seen from far behind, carrying two flat stone tablets. The tent camp lies small below. Weight and resolve in the posture. No face."
+        },
+        {
+          "id": "calf-08",
+          "caption": "The golden calf toppled on its side",
+          "prompt": "The golden calf statue tipped over on its side in the sand, gold dust blowing off its flank, the stone platform empty above it. Cold morning light. A sense of a spell broken. No people, no damage that is violent."
+        },
+        {
+          "id": "calf-09",
+          "caption": "Gold filings wash away in the river",
+          "prompt": "Fine glittering gold dust and filings being poured into a fast clear desert stream and carried away, sparkling in the current over pale stones. Close, quiet, almost beautiful. No people beyond a cropped hand at the very edge."
+        },
+        {
+          "id": "calf-10",
+          "caption": "The quiet camp at dawn, the platform empty",
+          "prompt": "The tent camp at clear golden dawn, calm and still, the low stone platform standing empty, the bare mountain bright and clean behind. Relief and a fresh start. No people."
+        }
+      ]
+    },
+    "fish": {
+      "title": "The Whale's Dark Belly",
+      "animal": "The Whale of Yunus",
+      "quran": "Surah as-Saffat 37:139-148, Surah al-Anbiya 21:87-88",
+      "scenes": [
+        {
+          "id": "fish-01",
+          "caption": "A wooden ship pitches on a huge night sea",
+          "prompt": "A small wooden sailing ship tossed on enormous dark rolling waves at night, sail straining, a few tiny hooded silhouettes clinging to the rails. Cold blue-black palette, spray lit by a break in the clouds. Danger, but painterly, not gory."
+        },
+        {
+          "id": "fish-02",
+          "caption": "Lots are drawn on the heaving deck",
+          "prompt": "Close on the wet wooden deck of the ship: a scatter of marked wooden sticks rolling with the tilt of the boat, one stick apart from the rest. A single figure stands at the rail in the background, seen from behind, hooded. Lantern light, rain."
+        },
+        {
+          "id": "fish-03",
+          "caption": "A figure goes into the black water",
+          "prompt": "Seen from the ship's rail: a small distant splash and spreading rings in the huge black sea where someone has gone in, the ship already sliding past. No face, no thrashing, just the ripple and the vast dark water. Restrained, quiet dread."
+        },
+        {
+          "id": "fish-04",
+          "caption": "An enormous whale rises from the deep",
+          "prompt": "A vast whale rising through deep blue water, mouth beginning to open, faint blue-green bioluminescent light along its body, shafts of moonlight from far above. Overwhelming scale, awe not horror. No people."
+        },
+        {
+          "id": "fish-05",
+          "caption": "Inside the whale, a single shaft of green light",
+          "prompt": "The cavernous dark interior of the whale, one narrow shaft of soft green light falling from above onto a small huddled silhouette, drifting glowing specks in the air like fireflies. Still, strange, oddly peaceful. No face."
+        },
+        {
+          "id": "fish-06",
+          "caption": "Ribbons of light spiral upward as he prays",
+          "prompt": "The small huddled silhouette with head bowed inside the dark whale, gentle ribbons of pale golden light spiralling upward around it and out through the dark. Hopeful, luminous, tender. No face."
+        },
+        {
+          "id": "fish-07",
+          "caption": "The whale glides through a moonlit ocean",
+          "prompt": "The great whale seen from outside, gliding slowly through a calm moonlit open ocean, a soft warm glow visible deep within it, silver light on the swells. Serene, vast, wondrous. No people."
+        },
+        {
+          "id": "fish-08",
+          "caption": "The whale gently sets its passenger on the shore",
+          "prompt": "A pale bare beach at first light, the huge whale in the shallows lowering its head as a small hooded silhouette steps onto the wet sand, seen from behind. Calm water, soft dawn colours. Gentle, grateful mood."
+        },
+        {
+          "id": "fish-09",
+          "caption": "A broad-leafed gourd vine grows over the resting figure",
+          "prompt": "A bare sandy shore; a green broad-leafed gourd vine growing quickly to spread shade over a small resting hooded silhouette lying with back to us. Soft morning light, tender and protective. No face."
+        },
+        {
+          "id": "fish-10",
+          "caption": "Sunrise over a calm sea, the whale's tail slipping under",
+          "prompt": "A wide calm sea at sunrise in warm gold and rose, the whale's great tail sinking gently beneath the surface far offshore, the gourd vine's leaves bright in the foreground. Peace, renewal. No people."
+        }
+      ]
+    },
+    "bee": {
+      "title": "The Little Architect's Secret",
+      "animal": "The Bee",
+      "quran": "Surah an-Nahl 16:68-69",
+      "scenes": [
+        {
+          "id": "bee-01",
+          "caption": "A wildflower meadow on a mountainside at golden hour",
+          "prompt": "A sweeping mountainside meadow full of wildflowers at golden hour, rocky outcrops and one old hollow tree, warm hives tucked in the rock crevices. Soft bees in the air as tiny points of light. No people. Abundance and calm."
+        },
+        {
+          "id": "bee-02",
+          "caption": "A single honeybee lifts off a blossom",
+          "prompt": "Extreme close-up of one honeybee taking off from a purple wildflower, golden pollen packed on its legs, wings a soft blur, warm bokeh behind. Rich detail, gentle light. No people."
+        },
+        {
+          "id": "bee-03",
+          "caption": "The bee's-eye flight over the valley",
+          "prompt": "A soaring aerial view over a green valley of orchards, a winding river and pale cliffs, as if flying with the bee, a few blurred wildflowers in the near foreground. Bright, joyful, airy. No people."
+        },
+        {
+          "id": "bee-04",
+          "caption": "Bees dance on the comb to share directions",
+          "prompt": "Inside a warm cliff-crevice hive: many bees on a golden wax comb, a few in the centre doing a looping waggle dance while others watch, soft amber light. All bees, no people. Communication and order."
+        },
+        {
+          "id": "bee-05",
+          "caption": "A cutaway of the wax comb's perfect hexagons",
+          "prompt": "Cross-section view of a honeycomb: rows of flawless golden hexagonal cells, some capped, some brimming with glowing honey, bees building the fresh edge. Warm backlight through the wax. No people."
+        },
+        {
+          "id": "bee-06",
+          "caption": "Bees fan the comb with their wings",
+          "prompt": "Close on the comb surface, dozens of bees lined up fanning their wings to cool the hive, a visible shimmer of warm air rising. Amber tones. No people."
+        },
+        {
+          "id": "bee-07",
+          "caption": "A beekeeper's distant silhouette sets a woven skep",
+          "prompt": "A far-off hooded silhouette placing a woven straw beehive among the meadow flowers at dusk, seen from behind and very small, bees drifting home around it. Soft violet-gold light. Gentle, no face."
+        },
+        {
+          "id": "bee-08",
+          "caption": "Amber honey drips from a piece of comb",
+          "prompt": "A broken piece of honeycomb held above a simple clay bowl (no hands visible, or only a cropped hand at the frame edge), thick amber honey drawing a slow glistening thread. Warm light, mouth-watering detail."
+        },
+        {
+          "id": "bee-09",
+          "caption": "A clay jar of honey glows on a stone sill",
+          "prompt": "A rustic clay jar full of golden honey sitting on a rough stone windowsill, sunlight passing through it and casting an amber glow on the wall, a sprig of dried flowers beside it. No modern objects, no people. Warm and homely."
+        },
+        {
+          "id": "bee-10",
+          "caption": "The meadow at dusk, bees streaming home",
+          "prompt": "The wildflower meadow at deep dusk, streams of bees flowing back toward the glowing hives in the rocks, the first stars above the mountain ridge. Calm, complete, thankful. No people."
+        }
+      ]
+    },
+    "donkey": {
+      "title": "The Sleeper of a Hundred Years",
+      "animal": "The Donkey of Uzayr",
+      "quran": "Surah al-Baqarah 2:259",
+      "scenes": [
+        {
+          "id": "donkey-01",
+          "caption": "A traveller on a donkey approaches a ruined town",
+          "prompt": "A lone hooded traveller silhouette riding a small grey donkey along a dusty ridge road at noon toward a ruined hilltop town, woven baskets of figs and a waterskin slung across the donkey. Seen from behind and at distance. Bright, still, heat-hazed."
+        },
+        {
+          "id": "donkey-02",
+          "caption": "The rider dismounts among broken walls",
+          "prompt": "Inside the ruined town: toppled mud-brick walls, collapsed roofs, a leaning stone arch. The small hooded silhouette stands among the rubble, seen from behind, the grey donkey beside a broken wall. Harsh noon light, deep shadows. Desolate but calm."
+        },
+        {
+          "id": "donkey-03",
+          "caption": "The rider rests in the shade while the donkey grazes",
+          "prompt": "A hooded silhouette sitting in the shade of a leaning stone arch, seen from the side in shadow with no face, the grey donkey nibbling dry weeds nearby. Baskets of fresh figs and a full waterskin on the ground. Heavy midday stillness."
+        },
+        {
+          "id": "donkey-04",
+          "caption": "Sun and moon streak across the sky over the ruins",
+          "prompt": "The ruined town under a long time-lapse sky: bright arcs of sun and moon and blurred stars sweeping overhead, the light shifting from gold to silver to gold. The ruins below stay dark and still. A hundred years passing. No people."
+        },
+        {
+          "id": "donkey-05",
+          "caption": "White bones of the donkey lie in the grass; the figs remain",
+          "prompt": "By the leaning arch, a set of weathered pale bones lying in tufts of dry grass, softly bleached and clean, clearly old. Nearby the woven basket of figs still sits. Gentle, peaceful, not gruesome. No blood. Soft overcast light."
+        },
+        {
+          "id": "donkey-06",
+          "caption": "Light returns and the figure stirs",
+          "prompt": "Warm light spreading over the ruins; a hooded silhouette sitting up from the ground, seen from behind, one arm raised to shade against the brightness. Dust motes, long soft rays. Waking, disoriented, gentle wonder."
+        },
+        {
+          "id": "donkey-07",
+          "caption": "The figs and waterskin are still perfectly fresh",
+          "prompt": "Close-up: a woven basket of plump fresh figs and a full waterskin with dew on them, resting right beside the weathered pale bones in the grass. The strange contrast of fresh and ancient. Soft light, quiet awe. No people."
+        },
+        {
+          "id": "donkey-08",
+          "caption": "The scattered bones draw together in a soft glow",
+          "prompt": "The pale bones lifting and drawing together in the grass wrapped in a gentle golden glow, fine dust rising around them, the form of a donkey taking shape. Luminous, reverent, wondrous. No people, nothing frightening."
+        },
+        {
+          "id": "donkey-09",
+          "caption": "A living donkey stands again",
+          "prompt": "A healthy grey donkey standing whole again in the grass by the stone arch, shaking out its coat, warm light on it. A single cropped hand at the frame edge rests on its neck. Joy and gratitude. No face."
+        },
+        {
+          "id": "donkey-10",
+          "caption": "The rebuilt green town in the distance at golden hour",
+          "prompt": "Wide view: the hill town now whole and green with gardens and rooftops in the golden distance, a small hooded silhouette leading the grey donkey down the ridge road toward it. Hopeful, glowing, restored."
+        }
+      ]
+    }
+  }
+}

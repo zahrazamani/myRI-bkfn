@@ -1,0 +1,11 @@
+# Build-time + test tooling only (not needed to run the server).
+# Install after requirements.txt:  pip install -r requirements.txt -r requirements-dev.txt
+
+# generate_illustrations.py / export_feedback.py
+# (Pillow is also pinned in requirements.txt - kid_art.py needs it at runtime.)
+Pillow==12.3.0
+openpyxl==3.1.5
+
+# Test suite (backend/tests/) - guardrail regression + adversarial bot tests.
+pytest==9.1.1
+httpx==0.28.1

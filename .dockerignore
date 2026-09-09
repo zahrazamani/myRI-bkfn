@@ -1,0 +1,46 @@
+# Docker build context = repo root (deploy/docker-compose.yml sets context: ..).
+# Keep this list tight: everything not excluded is uploaded to the daemon AND is
+# a candidate for `COPY backend/ ./` landing it in an image layer.
+
+# --- secrets: never ship these into an image ---
+**/.env
+**/.env.*
+!**/.env.example
+
+# --- huge, rebuilt during the image build ---
+**/node_modules
+**/venv
+**/.venv
+backend/chroma_db/
+frontend/dist/
+frontend/build/
+dist/
+build/
+
+# --- runtime data / caches (live on the mounted /data volume, not the image) ---
+backend/logs.db
+backend/*.sqlite3
+backend/rag_cache*
+backend/hf-cache/
+backend/exports/
+**/__pycache__/
+**/*.py[cod]
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+*.log
+
+# --- vcs / editor / OS / agent scratch ---
+.git/
+.gitignore
+.github/
+**/.claude/
+**/.DS_Store
+**/.idea/
+**/.vscode/
+
+# --- internal docs, not needed at runtime ---
+CHANGES-*.md
+FUTURE-WORKS.md
+DEPLOY.md
+README.md

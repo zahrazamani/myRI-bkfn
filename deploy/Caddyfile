@@ -1,0 +1,5 @@
+# Automatic HTTPS via Let's Encrypt. {$MYRI_DOMAIN} comes from compose.
+{$MYRI_DOMAIN} {
+	encode zstd gzip
+	reverse_proxy app:8000
+}
