@@ -59,8 +59,13 @@ VITE_TURNSTILE_SITE_KEY=<cloudflare turnstile site key>   # only if using Turnst
 
 ## 4. Ingest the documents
 
-Put the source files under `backend/documents/` (subfolders `journey/`,
-`compass/`, `superhero/`, plus `tafsir_almizan_en.db` if you have it), then:
+The PDF corpus is committed to the repo under `backend/documents/{journey,compass,superhero}/`.
+**Tafsir al-Mizan is not** — `backend/documents/noor/tafsir_almizan_en.db` (~29 MB)
+is `.gitignore`d, so a fresh checkout won't have it. Copy it onto the box at
+`backend/documents/noor/tafsir_almizan_en.db` before ingesting (or the
+Journey / Noor / Guardians bots lose their tafsir grounding).
+
+`backend/documents/README.md` lists every expected file. Then:
 
 ```bash
 sudo docker compose --env-file backend/.env -f deploy/docker-compose.yml exec app python ingest.py
@@ -69,8 +74,12 @@ sudo docker compose --env-file backend/.env -f deploy/docker-compose.yml exec ap
 Re-run whenever the corpus changes, and bump `MYRI_CORPUS_VERSION` in `.env` so
 the retrieval cache is invalidated, then `... up -d` to restart.
 
-> On the free Gemini tier, embedding hundreds of chunks will hit rate limits;
-> `ingest.py` retries with backoff, so just let it run (it can take a while).
+> **Rebuild is safe to run live.** `ingest.py` builds into `chroma_db.building`
+> and atomically swaps it in at the end; the running server keeps serving the
+> old store (held open) until you restart it. Embedding the full corpus
+> (~43k chunks, Tafsir included) takes ~40 min and, on the free Gemini tier,
+> hits rate limits — `ingest.py` retries with backoff, so just let it run.
+> Restart the container afterwards to pick up the new store.
 
 ## 5. Updating later
 
