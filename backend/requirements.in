@@ -8,11 +8,11 @@ python-multipart
 python-dotenv
 pydantic
 
-# LLM + RAG
+# LLM + RAG - no LangChain. google-genai does generation AND embeddings
+# (backend/embeddings.py), the chromadb client is used directly (rag.py /
+# ingest.py), and backend/textsplit.py replaces RecursiveCharacterTextSplitter.
 google-genai
-langchain
-langchain-google-genai
-langchain-community
+google-auth        # Google Sign-In ID-token verification (security.py)
 chromadb
 pymupdf           # ingest.py PDF extraction (cleaner than pypdf on these books)
 

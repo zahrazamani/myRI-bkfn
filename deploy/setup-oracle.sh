@@ -35,8 +35,9 @@ if [ ! -f backend/.env ]; then
 	cp backend/.env.example backend/.env
 	echo
 	echo "  >>> Edit backend/.env now: set GEMINI_API_KEY, MYRI_DOMAIN,"
-	echo "      MYRI_ALLOWED_ORIGINS, MYRI_ADMIN_TOKEN, and (optional) Turnstile keys."
-	echo "      Then re-run this script."
+	echo "      MYRI_ALLOWED_ORIGINS, MYRI_ADMIN_TOKEN, VITE_API_BASE_URL,"
+	echo "      and (optional) Turnstile / Google Sign-In keys. See the comments"
+	echo "      in the file and DEPLOY.md. Then re-run this script."
 	exit 0
 fi
 

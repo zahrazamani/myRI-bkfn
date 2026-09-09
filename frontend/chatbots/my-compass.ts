@@ -73,7 +73,7 @@ export const myCompassBot: Chatbot = {
   description: 'Clear, friendly answers to everyday fiqh questions, drawn only from Ayatollah al-Sistani’s "Islamic Laws" and "A Code of Practice for Muslims in the West".',
   ageGroup: 'all',
   systemPrompt: basePrompt + byVersion('', v2Extra),
-  imageUrl: 'https://i.imgur.com/JllQkme.jpeg',
+  imageUrl: '/bots/my-compass.jpg',
   welcomeMessage: "Life gets complicated, right? I'm My Compass, your go-to guide for clear answers on daily Islamic rulings. Got a question? Just ask, and let's find the way together!",
   examplePrompts: byVersion(
     [

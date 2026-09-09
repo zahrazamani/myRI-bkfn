@@ -73,7 +73,7 @@ RESTING_MESSAGE = os.environ.get(
 # Runtime image generation, so it is off unless explicitly enabled and needs a
 # billing-enabled key. Kept on a tight leash: a slowapi rate limit AND separate
 # daily caps (per login and site-wide) so image spend can never run away.
-KID_ART_ENABLED = _bool("MYRI_KID_ART_ENABLED", True)
+KID_ART_ENABLED = _bool("MYRI_KID_ART_ENABLED", False)
 KID_ART_MODEL = os.environ.get("MYRI_KID_ART_MODEL", "gemini-2.5-flash-image")
 KID_ART_MAX_DESC_CHARS = _int("MYRI_KID_ART_MAX_DESC_CHARS", 400)
 # Second-pass safety review of the *generated image itself* (not just the input
@@ -86,14 +86,50 @@ KID_ART_MODERATE_OUTPUT = _bool("MYRI_KID_ART_MODERATE_OUTPUT", True)
 # image. Kept in step with CHAT_MODEL's generation.
 KID_ART_MODERATION_MODEL = os.environ.get("MYRI_KID_ART_MODERATION_MODEL", "gemini-3.1-flash-lite")
 RATE_LIMIT_ILLUSTRATE = os.environ.get("MYRI_RATE_LIMIT_ILLUSTRATE", "3/hour;6/day")
-KID_ART_DAILY_CAP = _int("MYRI_KID_ART_DAILY_CAP", 60)
-KID_ART_DAILY_CAP_PER_USER = _int("MYRI_KID_ART_DAILY_CAP_PER_USER", 3)
+# Worst-case image spend/day = KID_ART_DAILY_CAP * PRICE_IMAGE_USD. At 20 * $0.04
+# that is $0.80/day (~$24/mo). Raise only once you have watched real usage.
+KID_ART_DAILY_CAP = _int("MYRI_KID_ART_DAILY_CAP", 20)
+KID_ART_DAILY_CAP_PER_USER = _int("MYRI_KID_ART_DAILY_CAP_PER_USER", 2)
+
+# --- Cost estimate (for /health only; not enforced) -------------------
+# Published price of MYRI_CHAT_MODEL, USD per 1M tokens. Update when you change
+# the model. Defaults are for gemini-3.1-flash-lite.
+PRICE_INPUT_PER_M_USD = _float("MYRI_PRICE_INPUT_PER_M_USD", 0.10)
+PRICE_OUTPUT_PER_M_USD = _float("MYRI_PRICE_OUTPUT_PER_M_USD", 0.40)
+PRICE_IMAGE_USD = _float("MYRI_PRICE_IMAGE_USD", 0.04)
 
 # --- CORS -------------------------------------------------------------
 # Comma-separated list of allowed origins. "*" (default when unset) is dev-only.
 ALLOWED_ORIGINS = [
     o.strip() for o in os.environ.get("MYRI_ALLOWED_ORIGINS", "*").split(",") if o.strip()
 ]
+
+# S7: refuse to boot wide-open in production. "production" is inferred from
+# MYRI_ENV=production or from MYRI_DOMAIN being set (the deploy stack always sets
+# it - see deploy/docker-compose.yml). Set MYRI_ALLOW_WILDCARD_CORS=true only if
+# you genuinely want an open CORS policy on a public deployment.
+IS_PRODUCTION = (
+    os.environ.get("MYRI_ENV", "").strip().lower() == "production"
+    or bool(os.environ.get("MYRI_DOMAIN", "").strip())
+)
+if (
+    IS_PRODUCTION
+    and ALLOWED_ORIGINS == ["*"]
+    and not _bool("MYRI_ALLOW_WILDCARD_CORS", False)
+):
+    raise RuntimeError(
+        "MYRI_ALLOWED_ORIGINS is '*' but this looks like a production deploy "
+        "(MYRI_ENV=production or MYRI_DOMAIN is set). Set MYRI_ALLOWED_ORIGINS to "
+        "your site origin(s), e.g. 'https://myri.example.org'. To deliberately "
+        "run an open CORS policy anyway, set MYRI_ALLOW_WILDCARD_CORS=true."
+    )
+
+# --- Google Sign-In (S4) -------------------------------------------
+# When set, the login page shows "Sign in with Google" and per-user daily caps
+# key off the verified Google account id instead of a self-typed email. Leave
+# blank to keep the unverified-email login (dev / soft launch).
+GOOGLE_OAUTH_CLIENT_ID = os.environ.get("MYRI_GOOGLE_CLIENT_ID", "").strip()
+GOOGLE_OAUTH_ENABLED = bool(GOOGLE_OAUTH_CLIENT_ID)
 
 # --- Cloudflare Turnstile -------------------------------------------
 TURNSTILE_SECRET = os.environ.get("MYRI_TURNSTILE_SECRET", "")

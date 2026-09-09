@@ -1,7 +1,7 @@
-import type { ChatMessage, Chatbot } from '../types';
+import type { ChatMessage } from '../types';
 import { CHATBOTS } from '../constants';
 import { getHumanToken } from './geminiService';
-
+import * as authService from './authService';
 
 const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
@@ -13,85 +13,95 @@ export interface ChatLog {
   messages: ChatMessage[];
 }
 
-/**
- * Logs a chat session to the backend.
- *
- * @param chatbotId - The ID of the chatbot used in the session.
- * @param messages - The array of chat messages from the session.
- */
-export const logChat = async (chatbotId: string, messages: ChatMessage[]): Promise<void> => {
-  if (messages.length <= 1) {
-    return;
+/** Thrown by getLogs/clearLogs when the admin token is missing or wrong. */
+export class LogAccessError extends Error {}
+
+const ADMIN_TOKEN_KEY = 'mri-admin-token';
+
+export const getAdminToken = (): string => {
+  try {
+    return sessionStorage.getItem(ADMIN_TOKEN_KEY) || '';
+  } catch {
+    return '';
   }
+};
+
+export const setAdminToken = (token: string): void => {
+  try {
+    if (token) sessionStorage.setItem(ADMIN_TOKEN_KEY, token);
+    else sessionStorage.removeItem(ADMIN_TOKEN_KEY);
+  } catch {
+    /* ignore */
+  }
+};
+
+/**
+ * Log one finished conversation to the backend in a SINGLE request (S2).
+ * Called once, at session end. Idempotent per session id on the backend.
+ */
+export const logChat = async (
+  chatbotId: string,
+  messages: ChatMessage[],
+  language?: string,
+): Promise<void> => {
+  if (messages.length <= 1) return;
 
   const chatbot = CHATBOTS.find(cb => cb.id === chatbotId);
   if (!chatbot) return;
-
-  const sessionId = `session-${Date.now()}-${Math.random()}`;
-
-  // We need to send each message individually or batch them.
-  // The backend expects individual messages for now based on my implementation plan,
-  // but let's check the backend implementation.
-  // Backend `log_message` takes one message at a time.
-  // Ideally, we should batch this, but for now let's iterate.
-  // Wait, the backend `log_message` inserts one row.
-  // And `get_logs` groups them by session.
-
-  // So we should iterate through messages and send them.
-  // To avoid spamming requests, we could update the backend to accept a batch.
-  // But strictly following the current backend `log_message` signature:
 
   const headers: Record<string, string> = { 'Content-Type': 'application/json' };
   const token = getHumanToken();
   if (token) headers.Authorization = `Bearer ${token}`;
 
-  for (const msg of messages) {
-    try {
-      await fetch(`${API_URL}/log`, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify({
-          sessionId,
-          chatbotId,
-          chatbotTitle: chatbot.title,
-          sender: msg.sender,
-          message: msg.text || '',
-          sources: msg.sources
-        }),
-      });
-    } catch (error) {
-      console.error("Failed to log message to backend:", error);
-    }
-  }
-};
-
-/**
- * Retrieves all chat logs from the backend.
- * @returns An array of ChatLog objects.
- */
-export const getLogs = async (): Promise<ChatLog[]> => {
   try {
-    const response = await fetch(`${API_URL}/logs`);
-    if (!response.ok) {
-      throw new Error(`Error fetching logs: ${response.statusText}`);
-    }
-    const logs = await response.json();
-    return logs;
-  } catch (error) {
-    console.error("Could not retrieve logs from backend:", error);
-    return [];
-  }
-};
-
-/**
- * Clears all chat logs from the backend.
- */
-export const clearLogs = async (): Promise<void> => {
-  try {
-    await fetch(`${API_URL}/logs`, {
-      method: 'DELETE',
+    await fetch(`${API_URL}/log/session`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        sessionId: `session-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+        chatbotId,
+        chatbotTitle: chatbot.title,
+        identity: authService.getCurrentUser() || undefined,
+        language: language || undefined,
+        messages: messages.map(m => ({
+          sender: m.sender,
+          text: m.text || '',
+          sources: m.sources && m.sources.length ? m.sources : undefined,
+        })),
+      }),
     });
   } catch (error) {
-    console.error("Could not clear logs from backend:", error);
+    console.error('Failed to log session to backend:', error);
+  }
+};
+
+const adminHeaders = (token: string): Record<string, string> => {
+  if (!token) throw new LogAccessError('An admin token is required.');
+  return { 'Content-Type': 'application/json', 'X-Admin-Token': token };
+};
+
+/** Fetch grouped chat sessions. Needs the admin token. */
+export const getLogs = async (token: string): Promise<ChatLog[]> => {
+  const response = await fetch(`${API_URL}/logs`, { headers: adminHeaders(token) });
+  if (response.status === 403) {
+    throw new LogAccessError('That admin token was rejected.');
+  }
+  if (!response.ok) {
+    throw new Error(`Error fetching logs: ${response.status}`);
+  }
+  return response.json();
+};
+
+/** Delete every stored transcript. Needs the admin token. */
+export const clearLogs = async (token: string): Promise<void> => {
+  const response = await fetch(`${API_URL}/logs`, {
+    method: 'DELETE',
+    headers: adminHeaders(token),
+  });
+  if (response.status === 403) {
+    throw new LogAccessError('That admin token was rejected.');
+  }
+  if (!response.ok) {
+    throw new Error(`Error clearing logs: ${response.status}`);
   }
 };

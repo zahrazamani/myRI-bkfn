@@ -13,6 +13,7 @@ Entries are namespaced by a corpus version so a re-ingest invalidates them.
 """
 from __future__ import annotations
 
+import datetime as _dt
 import hashlib
 import json
 import os
@@ -25,6 +26,7 @@ import numpy as np
 import config
 
 _TABLE = "rag_cache"
+_STATS_TABLE = "rag_cache_daily"
 
 
 def corpus_version() -> str:
@@ -53,7 +55,49 @@ def _conn() -> sqlite3.Connection:
         )"""
     )
     conn.execute(f"CREATE INDEX IF NOT EXISTS idx_{_TABLE}_bot ON {_TABLE}(chatbot_id, corpus_version)")
+    conn.execute(
+        f"""CREATE TABLE IF NOT EXISTS {_STATS_TABLE} (
+            day TEXT PRIMARY KEY,
+            hits INTEGER NOT NULL DEFAULT 0,
+            misses INTEGER NOT NULL DEFAULT 0
+        )"""
+    )
     return conn
+
+
+def _bump(column: str) -> None:
+    day = _dt.date.today().isoformat()
+    try:
+        conn = _conn()
+        conn.execute(
+            f"""INSERT INTO {_STATS_TABLE} (day, {column}) VALUES (?, 1)
+               ON CONFLICT(day) DO UPDATE SET {column} = {column} + 1""",
+            (day,),
+        )
+        conn.commit()
+        conn.close()
+    except sqlite3.Error:
+        pass  # metrics must never break a lookup
+
+
+def stats_today() -> dict:
+    day = _dt.date.today().isoformat()
+    try:
+        conn = _conn()
+        row = conn.execute(
+            f"SELECT hits, misses FROM {_STATS_TABLE} WHERE day = ?", (day,)
+        ).fetchone() or (0, 0)
+        conn.close()
+    except sqlite3.Error:
+        row = (0, 0)
+    hits, misses = row
+    total = hits + misses
+    return {
+        "hits": hits,
+        "misses": misses,
+        "lookups": total,
+        "hit_rate": round(hits / total, 3) if total else None,
+    }
 
 
 def _normalize(q: str) -> str:
@@ -80,6 +124,7 @@ def get(chatbot_id: str, query: str, embedding: list[float] | None) -> dict | No
             (_key(chatbot_id, norm),),
         ).fetchone()
         if row:
+            _bump("hits")
             return {"context": row[0], "sources": json.loads(row[1]), "cache": "exact"}
 
         if not (config.RAG_CACHE_SEMANTIC and embedding):
@@ -104,6 +149,7 @@ def get(chatbot_id: str, query: str, embedding: list[float] | None) -> dict | No
             if sim > best_sim:
                 best_sim, best = sim, (ctx, srcs)
         if best and best_sim >= config.RAG_CACHE_SEMANTIC_THRESHOLD:
+            _bump("hits")
             return {"context": best[0], "sources": json.loads(best[1]), "cache": f"semantic:{best_sim:.3f}"}
     finally:
         conn.close()
@@ -113,6 +159,7 @@ def get(chatbot_id: str, query: str, embedding: list[float] | None) -> dict | No
 def put(chatbot_id: str, query: str, embedding: list[float] | None, context: str, sources: list[str]) -> None:
     if not config.RAG_CACHE_ENABLED:
         return
+    _bump("misses")  # put() is only ever called after a cache miss
     norm = _normalize(query)
     emb_blob = None
     if embedding:

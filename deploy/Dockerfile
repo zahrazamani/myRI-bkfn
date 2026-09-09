@@ -7,6 +7,17 @@ WORKDIR /app/frontend
 COPY frontend/package*.json ./
 RUN npm ci
 COPY frontend/ ./
+# Vite bakes VITE_* into the JS bundle at build time. .dockerignore keeps .env
+# files out of the build context, so these arrive as build args (fed from
+# backend/.env by deploy/docker-compose.yml). All optional - empty = feature off.
+ARG VITE_API_BASE_URL=""
+ARG VITE_TURNSTILE_SITE_KEY=""
+ARG VITE_GOOGLE_CLIENT_ID=""
+ARG VITE_PROMPT_VERSION=""
+ENV VITE_API_BASE_URL=$VITE_API_BASE_URL \
+    VITE_TURNSTILE_SITE_KEY=$VITE_TURNSTILE_SITE_KEY \
+    VITE_GOOGLE_CLIENT_ID=$VITE_GOOGLE_CLIENT_ID \
+    VITE_PROMPT_VERSION=$VITE_PROMPT_VERSION
 RUN npm run build
 
 # ---- stage 2: python runtime ----

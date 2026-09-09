@@ -89,6 +89,8 @@ export const STRINGS: Record<string, Entry> = {
     fa: 'لطفاً اول بررسی «من انسان هستم» را کامل کن.',
   },
   'login.errEmail': { en: 'Please enter a valid email address.', fa: 'لطفاً یک نشانی ایمیل معتبر وارد کن.' },
+  'login.errGoogle': { en: 'Google sign-in failed. Please try again.', fa: 'ورود با گوگل ناموفق بود. لطفاً دوباره امتحان کن.' },
+  'login.orEmail': { en: 'or continue with email', fa: 'یا با ایمیل ادامه بده' },
 
   // --- Profile modal --------------------------------------------------
   'profile.title': { en: 'My Profile', fa: 'پروفایل من' },

@@ -15,6 +15,15 @@ declare global {
       render: (el: HTMLElement, opts: Record<string, unknown>) => string;
       reset: (id?: string) => void;
     };
+    google?: {
+      accounts: {
+        id: {
+          initialize: (opts: Record<string, unknown>) => void;
+          renderButton: (el: HTMLElement, opts: Record<string, unknown>) => void;
+          disableAutoSelect: () => void;
+        };
+      };
+    };
   }
 }
 
@@ -31,6 +40,40 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
   // When Turnstile is not configured, treat the user as already verified.
   const [verified, setVerified] = useState(!TURNSTILE_SITE_KEY);
   const widgetRef = useRef<HTMLDivElement>(null);
+  const googleBtnRef = useRef<HTMLDivElement>(null);
+  const googleEnabled = authService.isGoogleAuthEnabled();
+
+  // Google Sign-In (S4). Verified server-side; per-user caps then key off the
+  // real Google account id, not a self-typed email.
+  useEffect(() => {
+    if (!googleEnabled) return;
+    const scriptId = 'google-gsi-script';
+    const render = () => {
+      if (!window.google || !googleBtnRef.current || googleBtnRef.current.childElementCount) return;
+      window.google.accounts.id.initialize({
+        client_id: authService.GOOGLE_CLIENT_ID,
+        callback: async (resp: { credential?: string }) => {
+          if (!resp.credential) { setError(t(lang, 'login.errGoogle')); return; }
+          const email = await authService.loginWithGoogle(resp.credential);
+          if (email) { setError(''); onLoginSuccess(); }
+          else setError(t(lang, 'login.errGoogle'));
+        },
+      });
+      window.google.accounts.id.renderButton(googleBtnRef.current, {
+        theme: 'outline', size: 'large', width: 320, text: 'signin_with',
+      });
+    };
+    if (!document.getElementById(scriptId)) {
+      const s = document.createElement('script');
+      s.id = scriptId;
+      s.src = 'https://accounts.google.com/gsi/client';
+      s.async = true;
+      s.onload = render;
+      document.head.appendChild(s);
+    } else {
+      render();
+    }
+  }, [googleEnabled, lang, onLoginSuccess]);
 
   useEffect(() => {
     if (!TURNSTILE_SITE_KEY) return;
@@ -99,6 +142,19 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
             {t(lang, 'login.subtitle')}
           </p>
         </div>
+
+        {googleEnabled && (
+          <div className="space-y-4">
+            <div ref={googleBtnRef} className="flex justify-center" />
+            {error && <p className="text-sm text-red-600 text-center">{error}</p>}
+            <div className="flex items-center gap-3 text-xs text-gray-400">
+              <span className="flex-grow border-t border-gray-200" />
+              {t(lang, 'login.orEmail')}
+              <span className="flex-grow border-t border-gray-200" />
+            </div>
+          </div>
+        )}
+
         <form className="mt-8 space-y-6" onSubmit={handleLogin}>
           <div className="rounded-md shadow-sm -space-y-px">
             <div>

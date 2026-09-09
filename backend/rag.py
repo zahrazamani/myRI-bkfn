@@ -1,6 +1,6 @@
 """Retrieval-augmented context lookup.
 
-Pipeline:  query -> embed (Google) -> cache check
+Pipeline:  query -> embed (Gemini) -> cache check
            -> one vector search PER corpus tag (k=FETCH_K each), merged
            -> local cross-encoder rerank -> keep TOP_K -> cache store.
 
@@ -8,20 +8,25 @@ Searching each corpus separately matters because the store is ~88% Tafsir
 al-Mizan: a single filtered search would hand the reranker almost nothing from
 a bot's own (much smaller) book collection. Per-tag search guarantees each
 corpus gets a fair FETCH_K candidates before the reranker picks the best.
+
+Uses the chromadb client and google-genai embeddings directly (no LangChain).
+The store's collection is named "langchain" for historical reasons and is read
+as-is - the embeddings in it are gemini-embedding-001 / RETRIEVAL_DOCUMENT, which
+embeddings.embed_query matches, so no re-ingest was needed for this change.
 """
 import logging
 
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
-from langchain_community.vectorstores import Chroma
+import chromadb
 
 import config
+import embeddings
 import rag_cache
 import reranker
+from docmodel import Doc
 
 log = logging.getLogger("myri.rag")
 
-_embeddings = None
-_vectorstore = None
+_collection = None
 
 # Bots that also read a second corpus in the shared store, by the extra
 # chatbot_id tag to include. Tafsir al-Mizan is tagged "tafsir"; Better Me shares
@@ -32,6 +37,8 @@ _ALSO_READS: dict[str, str] = {
     "journey-beliefs": "tafsir",
     "better-me": "superhero-universe",
 }
+
+_COLLECTION_NAME = "langchain"
 
 
 def _corpus_tags(chatbot_id: str) -> list[str]:
@@ -46,25 +53,33 @@ def _cite(meta: dict) -> str:
     return meta.get("citation") or meta.get("source") or "Unknown"
 
 
-def _get_vectorstore():
-    global _embeddings, _vectorstore
-    if _vectorstore is None:
+def _get_collection():
+    global _collection
+    if _collection is None:
         if not config.GOOGLE_API_KEY:
             raise ValueError("GOOGLE_API_KEY / GEMINI_API_KEY not set")
-        _embeddings = GoogleGenerativeAIEmbeddings(
-            model=config.EMBED_MODEL, google_api_key=config.GOOGLE_API_KEY
-        )
-        _vectorstore = Chroma(
-            persist_directory=config.CHROMA_PATH, embedding_function=_embeddings
-        )
-    return _vectorstore
+        client = chromadb.PersistentClient(path=config.CHROMA_PATH)
+        try:
+            _collection = client.get_collection(_COLLECTION_NAME)
+        except Exception:
+            cols = client.list_collections()
+            if not cols:
+                raise
+            _collection = client.get_collection(cols[0].name)
+            log.warning("collection %r not found; using %r", _COLLECTION_NAME, cols[0].name)
+    return _collection
 
 
-def _search_tag(vectorstore, embedding, query: str, tag: str, k: int) -> list:
-    flt = {"chatbot_id": tag}
-    if embedding is not None:
-        return vectorstore.similarity_search_by_vector(embedding, k=k, filter=flt)
-    return vectorstore.similarity_search(query, k=k, filter=flt)
+def _search_tag(collection, embedding, tag: str, k: int) -> list[Doc]:
+    res = collection.query(
+        query_embeddings=[embedding],
+        n_results=k,
+        where={"chatbot_id": tag},
+        include=["documents", "metadatas"],
+    )
+    docs = res.get("documents") or [[]]
+    metas = res.get("metadatas") or [[]]
+    return [Doc(page_content=d, metadata=m or {}) for d, m in zip(docs[0], metas[0])]
 
 
 def retrieve_documents(query: str, chatbot_id: str) -> dict:
@@ -72,26 +87,30 @@ def retrieve_documents(query: str, chatbot_id: str) -> dict:
     if not query:
         return {"context": "", "sources": [], "cache": "empty-query"}
 
-    vectorstore = _get_vectorstore()
-
     # One embedding call, reused for cache lookup and vector search.
     embedding = None
     try:
-        embedding = _embeddings.embed_query(query)
+        embedding = embeddings.embed_query(query)
     except Exception as exc:
-        log.warning("embed_query failed (%s); continuing without semantic cache", exc)
+        log.warning("embed_query failed (%s); continuing without retrieval", exc)
 
     cached = rag_cache.get(chatbot_id, query, embedding)
     if cached:
         return cached
 
+    if embedding is None:
+        # No embedding -> no vector search possible (the stored collection has no
+        # embedding function attached). Better to answer un-grounded than crash.
+        return {"context": "", "sources": [], "cache": "error"}
+
     # One search per corpus so the small book collections aren't crowded out by
     # the 37k-passage Tafsir corpus; then merge and let the reranker choose.
-    candidates: list = []
+    candidates: list[Doc] = []
     seen: set = set()
     try:
+        collection = _get_collection()
         for tag in _corpus_tags(chatbot_id):
-            for d in _search_tag(vectorstore, embedding, query, tag, config.RAG_FETCH_K):
+            for d in _search_tag(collection, embedding, tag, config.RAG_FETCH_K):
                 key = (d.metadata.get("source"), d.metadata.get("page"), d.page_content[:100])
                 if key in seen:
                     continue

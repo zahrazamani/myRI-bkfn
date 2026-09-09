@@ -73,7 +73,7 @@ export const journeyBeliefsBot: Chatbot = {
   ageGroup: '16+',
   isRag: true,
   systemPrompt: basePrompt + byVersion('', v2Extra),
-  imageUrl: 'https://i.imgur.com/SVlfhNY.jpeg',
+  imageUrl: '/bots/journey-beliefs.jpg',
   welcomeMessage: "Ready to tackle life's biggest questions? Why are we here? What's our purpose? Let's explore the deep stuff together and find answers that click. Your journey to certainty starts now!",
   examplePrompts: byVersion(
     [

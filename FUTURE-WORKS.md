@@ -9,6 +9,34 @@ Related: `CHANGES-build-b.md`, `CHANGES-guardrails-security.md`,
 
 ---
 
+## 0. Prod-readiness pass (2026-09-10) — status
+
+S1–S8 from the review are done in the working tree. Follow-ups they leave:
+
+- **S4 (Google Sign-In):** code + deploy plumbing are in. To activate: create an
+  OAuth 2.0 **Web** client in Google Cloud Console, add your origins to "Authorized
+  JavaScript origins", set `MYRI_GOOGLE_CLIENT_ID` **and** `VITE_GOOGLE_CLIENT_ID`
+  (same value) in `backend/.env`, `docker compose ... up -d --build`. Full steps in
+  DEPLOY.md → "Google Sign-In". Until then the plain email login still shows.
+- **Fixed in passing:** `VITE_*` env vars never reached the Docker frontend build
+  (`.dockerignore` excludes `**/.env`, no build args existed) - so `VITE_API_BASE_URL`,
+  `VITE_TURNSTILE_SITE_KEY` etc. were silently dropped in the containerised deploy.
+  `deploy/Dockerfile` + `deploy/docker-compose.yml` now pass them as build args from
+  `backend/.env`; `frontend/.env` is dev-only.
+- **S5 (no LangChain):** `requirements.txt` had the `langchain*`/`langgraph*`/`langsmith`
+  lines removed by hand; a few of their transitive-only deps may still be listed.
+  Do a clean `pip install -r requirements.in && pip freeze > requirements.txt` on
+  the next dependency change. No re-ingest was needed (embeddings match), but a
+  re-ingest would still improve quality — some older chunks in the store have
+  mangled whitespace and empty citations.
+- **S8 (CI):** `.github/workflows/ci.yml` added. The `live-adversarial` job needs a
+  `GEMINI_API_KEY` repo secret; it runs nightly on main and on PRs labelled
+  `live-tests`.
+- **Server-side profile / real accounts:** once S4 is live, move the localStorage
+  profile (see A1) behind the Google identity so it survives devices.
+
+---
+
 ## A. Deferred slices of the in-flight features
 
 > Update 2026-09-08: the four in-flight features (unified profile, choose-your-path,

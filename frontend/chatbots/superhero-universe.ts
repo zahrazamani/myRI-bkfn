@@ -107,7 +107,7 @@ export const superheroUniverseBot: Chatbot = {
   ageGroup: '11-15',
   stages: ["The Academy", "Cave of Anger", "The Whispering Woods", "The Final Trial"],
   systemPrompt: basePrompt + byVersion('', v2Extra),
-  imageUrl: 'https://i.imgur.com/ojrtEuC.jpeg',
+  imageUrl: '/bots/superhero-universe.jpg',
   welcomeMessage: "Welcome, Hero! 🦸 Ready to unlock your inner superpower? Let's train, defeat some inner monsters, and find the Treasure of your True Self! Are you in?",
   examplePrompts: [
     "I'm ready - let's start!",

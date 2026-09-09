@@ -334,7 +334,7 @@ const ChatModal: React.FC<ChatModalProps> = ({ chatbot, onClose, language }) => 
       window.speechSynthesis.cancel();
     }
     if(messages.length > 1) {
-      logChat(chatbot.id, messages);
+      logChat(chatbot.id, messages, language);
     }
     if (heroRef.current) saveHeroProfile(heroRef.current);
     if (profileRef.current) {

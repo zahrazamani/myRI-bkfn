@@ -81,7 +81,7 @@ export const betterMeBot: Chatbot = {
   ageGroup: '16+',
   isRag: true,
   systemPrompt: basePrompt + byVersion('', v2Extra),
-  imageUrl: 'https://i.imgur.com/vj6bNOF.jpeg',
+  imageUrl: '/bots/better-me.jpg',
   welcomeMessage: "Hey, I'm Afiya - a coach for working on yourself, one trait at a time. Everything I share comes from one classic book on character, ‘Jami’ al-Sa’adat’. Which part of yourself do you want to work on today?",
   examplePrompts: byVersion(
     [

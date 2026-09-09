@@ -4,6 +4,14 @@ services:
     build:
       context: ..
       dockerfile: deploy/Dockerfile
+      args:
+        # Interpolated from --env-file backend/.env (same as MYRI_DOMAIN below).
+        # Frontend build-time config - see the "Frontend build" block in
+        # backend/.env.example.
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-}
+        VITE_TURNSTILE_SITE_KEY: ${VITE_TURNSTILE_SITE_KEY:-}
+        VITE_GOOGLE_CLIENT_ID: ${VITE_GOOGLE_CLIENT_ID:-}
+        VITE_PROMPT_VERSION: ${VITE_PROMPT_VERSION:-}
     restart: unless-stopped
     env_file:
       - ../backend/.env

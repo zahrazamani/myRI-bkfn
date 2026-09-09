@@ -68,7 +68,7 @@ export const dailyDialogueBot: Chatbot = {
   ageGroup: '16+',
   isRag: true,
   systemPrompt: basePrompt + byVersion('', v2Extra),
-  imageUrl: 'https://i.imgur.com/fCFTJSa.jpeg',
+  imageUrl: '/bots/daily-dialogue.jpg',
   welcomeMessage: "Got a big question on your mind? I'm NOOR, your personal guide to the Quran's wisdom. Let's chat and find some light together. What would you like to explore today?",
   examplePrompts: byVersion(
     [

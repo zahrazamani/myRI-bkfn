@@ -35,14 +35,21 @@ import sqlite3
 import sys
 import time
 
+import uuid
+
+import chromadb
 import dotenv
 import pymupdf
-from langchain_community.vectorstores import Chroma
-from langchain_core.documents import Document
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
-from langchain_text_splitters import RecursiveCharacterTextSplitter
+
+import embeddings
+import textsplit
+from docmodel import Doc as Document  # same shape: .page_content + .metadata
 
 dotenv.load_dotenv()
+
+# The collection name the old langchain store used; rag.py reads it back by this
+# name, so keep it stable.
+COLLECTION_NAME = "langchain"
 
 DATA_PATH = "./documents"
 CHROMA_PATH = "./chroma_db"
@@ -263,13 +270,7 @@ def load_documents() -> list[Document]:
 
 
 def split_text(documents: list[Document]) -> list[Document]:
-    splitter = RecursiveCharacterTextSplitter(
-        chunk_size=1000,
-        chunk_overlap=200,
-        length_function=len,
-        add_start_index=True,
-    )
-    chunks = splitter.split_documents(documents)
+    chunks = textsplit.split_documents(documents, chunk_size=1000, chunk_overlap=200)
     print(f"Split {len(documents)} documents into {len(chunks)} chunks.")
     return chunks
 
@@ -282,10 +283,27 @@ EMBED_BATCH_SIZE = 100
 MAX_RETRIES = 6
 
 
-def _embed_with_retry(db, batch):
+def _clean_meta(meta: dict) -> dict:
+    """Chroma metadata values must be str / int / float / bool - drop None and
+    empty strings, coerce everything else to str."""
+    out = {}
+    for k, v in meta.items():
+        if v is None or v == "":
+            continue
+        out[k] = v if isinstance(v, (str, int, float, bool)) else str(v)
+    return out
+
+
+def _add_with_retry(col, batch: list[Document]) -> None:
     for attempt in range(MAX_RETRIES):
         try:
-            db.add_documents(batch)
+            vectors = embeddings.embed_documents([d.page_content for d in batch])
+            col.add(
+                ids=[str(uuid.uuid4()) for _ in batch],
+                embeddings=vectors,
+                documents=[d.page_content for d in batch],
+                metadatas=[_clean_meta(d.metadata) for d in batch],
+            )
             return
         except Exception as e:  # noqa: BLE001
             msg = str(e)
@@ -305,13 +323,17 @@ def save_to_chroma(chunks: list[Document]) -> None:
     if os.path.exists(BUILD_PATH):
         shutil.rmtree(BUILD_PATH)
 
-    embeddings = GoogleGenerativeAIEmbeddings(model=EMBED_MODEL, google_api_key=api_key)
-    db = Chroma(persist_directory=BUILD_PATH, embedding_function=embeddings)
+    client = chromadb.PersistentClient(path=BUILD_PATH)
+    col = client.get_or_create_collection(COLLECTION_NAME)
 
     total = len(chunks)
     for start in range(0, total, EMBED_BATCH_SIZE):
-        _embed_with_retry(db, chunks[start:start + EMBED_BATCH_SIZE])
+        _add_with_retry(col, chunks[start:start + EMBED_BATCH_SIZE])
         print(f"  embedded {min(start + EMBED_BATCH_SIZE, total)}/{total}")
+
+    # Release the SQLite handle on the freshly built store before the rename.
+    del col
+    del client
 
     # atomic-ish swap: the gap where chroma_db doesn't exist is milliseconds.
     # A running server holds its SQLite handle open across the rename and keeps

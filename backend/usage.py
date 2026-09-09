@@ -157,13 +157,27 @@ def snapshot() -> dict:
             "SELECT requests, input_tokens, output_tokens FROM usage_daily WHERE day = ?",
             (day,),
         ).fetchone() or (0, 0, 0)
+        images = (
+            conn.execute(
+                "SELECT requests FROM illustrate_daily WHERE day = ?", (day,)
+            ).fetchone()
+            or (0,)
+        )[0]
     finally:
         conn.close()
+    requests, in_tok, out_tok = row
+    est_cost = (
+        in_tok / 1_000_000 * config.PRICE_INPUT_PER_M_USD
+        + out_tok / 1_000_000 * config.PRICE_OUTPUT_PER_M_USD
+        + images * config.PRICE_IMAGE_USD
+    )
     return {
         "day": day,
-        "requests": row[0],
-        "input_tokens": row[1],
-        "output_tokens": row[2],
+        "requests": requests,
+        "input_tokens": in_tok,
+        "output_tokens": out_tok,
+        "images": images,
         "request_cap": config.DAILY_REQUEST_CAP,
         "token_cap": config.DAILY_TOKEN_CAP,
+        "estimated_cost_usd": round(est_cost, 4),
     }

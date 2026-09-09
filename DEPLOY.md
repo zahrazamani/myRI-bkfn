@@ -41,6 +41,10 @@ bash deploy/setup-oracle.sh          # run again -> builds and starts
 
 ### Required settings in `backend/.env`
 
+The single-container deploy reads **only `backend/.env`** (`docker compose --env-file
+backend/.env`) - both the backend runtime env and the frontend `VITE_*` build args
+come from it. (`frontend/.env` is only for a local `npm run dev`.)
+
 | Key | Value |
 |---|---|
 | `GEMINI_API_KEY` | your Google AI Studio key |
@@ -49,13 +53,13 @@ bash deploy/setup-oracle.sh          # run again -> builds and starts
 | `MYRI_ADMIN_TOKEN` | long random string (needed to read `/logs`) |
 | `MYRI_SESSION_SIGNING_SECRET` | long random string |
 | `MYRI_TURNSTILE_SECRET` | from Cloudflare → Turnstile (optional but recommended) |
+| `MYRI_GOOGLE_CLIENT_ID` | OAuth Web client ID, if using Google Sign-In (optional) |
+| `VITE_API_BASE_URL` | `https://myri.example.org` (browser calls the API directly) |
+| `VITE_TURNSTILE_SITE_KEY` | Cloudflare Turnstile **site** key, if `MYRI_TURNSTILE_SECRET` is set |
+| `VITE_GOOGLE_CLIENT_ID` | **same value** as `MYRI_GOOGLE_CLIENT_ID`, if using Google Sign-In |
 
-And in `frontend/.env` before the build (the container build reads it):
-
-```
-VITE_API_BASE_URL=https://myri.example.org
-VITE_TURNSTILE_SITE_KEY=<cloudflare turnstile site key>   # only if using Turnstile
-```
+`VITE_*` values are baked into the JS bundle at image-build time, so changing one
+needs `docker compose ... up -d --build`, not just a restart.
 
 ## 4. Ingest the documents
 
@@ -88,11 +92,41 @@ cd myRI-bkfn && git pull
 sudo docker compose --env-file backend/.env -f deploy/docker-compose.yml up -d --build
 ```
 
+## Google Sign-In (optional, S4)
+
+Without this, "login" is an unverified email string and per-user daily caps can be
+bypassed by typing a new email. Google Sign-In makes the identity real.
+
+1. **Google Cloud Console** → create/select a project.
+2. **APIs & Services → OAuth consent screen**: User type *External*; fill app name,
+   support email, developer email. Scopes: leave the defaults (`openid`, `email`,
+   `profile`) — no Google verification review is needed for these. Add yourself
+   under *Test users* to try it, then **Publish app** to let anyone sign in.
+3. **APIs & Services → Credentials → Create credentials → OAuth client ID**:
+   Application type **Web application**. Under *Authorized JavaScript origins* add
+   every origin the app is served from, scheme + host + port, no path:
+   - `https://myri.example.org`
+   - `http://localhost:3000` and `http://localhost:8000` for local testing
+   *Authorized redirect URIs* — leave empty (the button flow doesn't use them).
+4. Copy the **Client ID** (`…apps.googleusercontent.com`). No client secret needed.
+5. In `backend/.env` set **both**:
+   ```
+   MYRI_GOOGLE_CLIENT_ID=…apps.googleusercontent.com
+   VITE_GOOGLE_CLIENT_ID=…apps.googleusercontent.com
+   ```
+6. Rebuild: `docker compose --env-file backend/.env -f deploy/docker-compose.yml up -d --build`
+   (the client ID is baked into the JS bundle, so a plain restart won't pick it up).
+
+The login page then shows "Sign in with Google" above the email form. The backend
+verifies the ID token and per-user caps key off the verified Google account id.
+Common failure: an origin mismatch — `http://localhost` vs `http://127.0.0.1`, or
+a missing port, counts as a different origin in the console.
+
 ## Cloudflare hardening (free plan)
 
-- **Turnstile**: create a widget, put the site key in `frontend/.env`, the secret
-  in `backend/.env`. The login page then shows an "I am human" check and the
-  backend refuses `/chat` without a valid token.
+- **Turnstile**: create a widget, put `VITE_TURNSTILE_SITE_KEY` and
+  `MYRI_TURNSTILE_SECRET` in `backend/.env`, rebuild. The login page then shows an
+  "I am human" check and the backend refuses `/chat` without a valid token.
 - **Bot Fight Mode**: Security → Bots → on.
 - **Rate limiting rule**: e.g. `/chat` → 30 requests / 10 min / IP → Block.
 - **Cache rule**: cache `/illustrations/*` and `/assets/*` aggressively.

@@ -79,15 +79,48 @@ def validate_session_token(token: str) -> dict | None:
         return None
 
 
+def _bearer(authorization: str | None) -> str:
+    if authorization and authorization.lower().startswith("bearer "):
+        return authorization[7:].strip()
+    return ""
+
+
 async def require_human(request: Request, authorization: str | None = Header(default=None)) -> dict:
     """FastAPI dependency: allow the request only if it carries a valid token
-    (or if Turnstile is disabled, in which case everyone is let through)."""
+    (or if Turnstile is disabled, in which case everyone is let through).
+
+    A valid token is still honoured when Turnstile is off - that is how a Google
+    Sign-In session (see /auth/google) carries its verified `sub` through to the
+    per-user usage caps."""
+    payload = validate_session_token(_bearer(authorization))
+    if payload:
+        return payload
     if not config.TURNSTILE_ENABLED:
         return {"sub": "anon"}
-    token = ""
-    if authorization and authorization.lower().startswith("bearer "):
-        token = authorization[7:].strip()
-    payload = validate_session_token(token)
-    if not payload:
-        raise HTTPException(status_code=401, detail="human-verification-required")
-    return payload
+    raise HTTPException(status_code=401, detail="human-verification-required")
+
+
+# --- Google Sign-In verification (S4) --------------------------------
+
+def verify_google_id_token(id_token_str: str) -> dict | None:
+    """Verify a Google Identity Services ID token. Returns {sub, email,
+    email_verified} on success, or None."""
+    if not config.GOOGLE_OAUTH_ENABLED or not id_token_str:
+        return None
+    try:
+        from google.auth.transport import requests as g_requests
+        from google.oauth2 import id_token as g_id_token
+
+        info = g_id_token.verify_oauth2_token(
+            id_token_str, g_requests.Request(), config.GOOGLE_OAUTH_CLIENT_ID
+        )
+        if info.get("iss") not in ("accounts.google.com", "https://accounts.google.com"):
+            return None
+        return {
+            "sub": info["sub"],
+            "email": info.get("email", ""),
+            "email_verified": bool(info.get("email_verified")),
+        }
+    except Exception as exc:  # bad signature, wrong audience, expired, clock skew
+        log.warning("google id token verify failed: %s", exc)
+        return None

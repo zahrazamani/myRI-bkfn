@@ -54,7 +54,7 @@ const App: React.FC = () => {
     <div className="min-h-screen text-gray-800 font-sans">
       <div 
         className="fixed inset-0 bg-cover bg-center -z-10"
-        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1506260408121-e353d10b87c7?q=80&w=2728&auto=format&fit=crop')" }}
+        style={{ backgroundImage: "url('/bg.jpg')" }}
       />
       <div className="fixed inset-0 bg-gradient-to-br from-purple-100/70 via-indigo-100/70 to-blue-200/70 -z-10" />
 

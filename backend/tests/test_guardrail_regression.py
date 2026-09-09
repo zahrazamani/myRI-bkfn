@@ -130,29 +130,28 @@ def test_illustrate_rejects_oversized_description(client):
     assert r.status_code == 422
 
 
-def test_log_rejects_arbitrary_sender_value(client):
-    r = client.post("/log", json={
+def test_log_session_rejects_arbitrary_sender_value(client):
+    r = client.post("/log/session", json={
         "sessionId": "s", "chatbotId": "my-compass", "chatbotTitle": "t",
-        "sender": "system", "message": "hi",
+        "messages": [{"sender": "system", "text": "hi"}],
     })
     assert r.status_code == 422
 
 
-def test_log_accepts_the_two_real_sender_values(client):
-    for sender in ("user", "bot"):
-        r = client.post("/log", json={
-            "sessionId": "s", "chatbotId": "my-compass", "chatbotTitle": "t",
-            "sender": sender, "message": "hi",
-        })
-        assert r.status_code == 200, r.text
+def test_log_session_accepts_the_two_real_sender_values(client):
+    r = client.post("/log/session", json={
+        "sessionId": "s", "chatbotId": "my-compass", "chatbotTitle": "t",
+        "messages": [{"sender": "user", "text": "hi"}, {"sender": "bot", "text": "hello"}],
+    })
+    assert r.status_code == 200, r.text
 
 
-def test_log_requires_human_verification_when_turnstile_enabled(client, monkeypatch):
+def test_log_session_requires_human_verification_when_turnstile_enabled(client, monkeypatch):
     import config
     monkeypatch.setattr(config, "TURNSTILE_ENABLED", True)
-    r = client.post("/log", json={
+    r = client.post("/log/session", json={
         "sessionId": "s", "chatbotId": "my-compass", "chatbotTitle": "t",
-        "sender": "user", "message": "hi",
+        "messages": [{"sender": "user", "text": "hi"}],
     })
     assert r.status_code == 401
 

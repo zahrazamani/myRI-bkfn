@@ -37,7 +37,8 @@ def _get_model():
 
 
 def rerank(query: str, docs: list, top_k: int) -> list:
-    """Return the top_k docs (langchain Document objects) most relevant to query."""
+    """Return the top_k docs (docmodel.Doc: .page_content + .metadata) most
+    relevant to query."""
     if not docs:
         return []
     if not config.RERANK_ENABLED or len(docs) <= top_k:

@@ -126,7 +126,7 @@ export const guardiansClubBot: Chatbot = {
   description: 'You probably havent read Quranic stories like this before! Here, each member of The Lost Guardians Club is ready to tell you their fascinating tale. And if you have any questions, you can ask them',
   ageGroup: '11-15',
   systemPrompt: basePrompt + byVersion('', v2Extra),
-  imageUrl: 'https://i.imgur.com/WE39ySA.jpeg',
+  imageUrl: '/bots/guardians-club.jpg',
   welcomeMessage: "Welcome to the club, Guardian! The Quran's coolest animals are waiting to tell you their secrets. Ready for an adventure? Pick an animal to start!",
   examplePrompts: [
     "Spider",

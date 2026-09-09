@@ -14,14 +14,26 @@ import bot_registry
 import config
 import database
 import kid_art
+import rag_cache
 import usage
 from chat import generate_reply
 from security import (
     issue_session_token,
     limiter,
     require_human,
+    verify_google_id_token,
     verify_turnstile,
 )
+
+
+def _identity_for(body_identity: str | None, human: dict) -> str | None:
+    """The value per-user daily caps key off. Prefer the verified `sub` from a
+    Google Sign-In / Turnstile session; fall back to the (unverified) email the
+    client sent only when there is no verified session (dev / soft launch)."""
+    sub = (human or {}).get("sub")
+    if sub and sub != "anon":
+        return sub.strip().lower()
+    return (body_identity or "").strip().lower() or None
 
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger("myri")
@@ -76,21 +88,38 @@ class IllustrateRequest(BaseModel):
     identity: Optional[str] = None
 
 
-class LogMessageRequest(BaseModel):
-    sessionId: str = Field(max_length=config.LOG_FIELD_MAX_CHARS)
-    chatbotId: str = Field(max_length=config.LOG_FIELD_MAX_CHARS)
-    chatbotTitle: str = Field(max_length=config.LOG_FIELD_MAX_CHARS)
+class LoggedMessage(BaseModel):
     # Restricting to the two real roles closes off using this endpoint to
     # write arbitrary "sender" strings into the transcript store.
     sender: Literal["user", "bot"]
-    message: str = Field(default="", max_length=config.LOG_MESSAGE_MAX_CHARS)
+    text: str = Field(default="", max_length=config.LOG_MESSAGE_MAX_CHARS)
     sources: Optional[List[str]] = None
+
+
+class LogSessionRequest(BaseModel):
+    """One whole finished conversation, posted once at session end (S2) - no
+    more one-request-per-message loop that could trip the rate limit on a long
+    chat."""
+    sessionId: str = Field(max_length=config.LOG_FIELD_MAX_CHARS)
+    chatbotId: str = Field(max_length=config.LOG_FIELD_MAX_CHARS)
+    chatbotTitle: str = Field(max_length=config.LOG_FIELD_MAX_CHARS)
+    identity: Optional[str] = Field(default=None, max_length=config.LOG_FIELD_MAX_CHARS)
+    language: Optional[str] = Field(default=None, max_length=8)
+    messages: List[LoggedMessage] = Field(max_length=config.CHAT_MESSAGES_MAX_COUNT)
 
 
 # --------------------------------------------------------------------- routes
 @app.get("/health")
 async def health():
-    return {"status": "ok", "usage": usage.snapshot()}
+    # NB: exposes today's request/token counts, caps, a rough cost estimate and
+    # the cache hit rate with no auth. All coarse operational numbers, no user
+    # data - kept public on purpose so the box can be watched without a token.
+    return {
+        "status": "ok",
+        "model": config.CHAT_MODEL,
+        "usage": usage.snapshot(),
+        "rag_cache": rag_cache.stats_today(),
+    }
 
 
 @app.post("/verify")
@@ -102,6 +131,28 @@ async def verify_endpoint(request: Request, body: VerifyRequest):
     return {"token": issue_session_token(body.identity)}
 
 
+class GoogleAuthRequest(BaseModel):
+    credential: str = Field(max_length=4096)  # the Google ID token (JWT)
+
+
+@app.post("/auth/google")
+@limiter.limit("20/minute;100/hour")
+async def google_auth_endpoint(request: Request, body: GoogleAuthRequest):
+    """Exchange a Google Identity Services ID token for MYRI's own signed session
+    token (S4). The session's `sub` is the verified Google account id, which the
+    per-user daily caps then key off - so they can no longer be bypassed by
+    typing a fresh email."""
+    if not config.GOOGLE_OAUTH_ENABLED:
+        raise HTTPException(status_code=503, detail="google-auth-disabled")
+    info = verify_google_id_token(body.credential)
+    if not info:
+        raise HTTPException(status_code=401, detail="google-verification-failed")
+    return {
+        "token": issue_session_token(f"google:{info['sub']}"),
+        "email": info["email"],
+    }
+
+
 @app.post("/chat")
 @limiter.limit(config.RATE_LIMIT_CHAT)
 async def chat_endpoint(request: Request, body: ChatRequest, _human=Depends(require_human)):
@@ -110,7 +161,7 @@ async def chat_endpoint(request: Request, body: ChatRequest, _human=Depends(requ
     # identity lock (see bot_registry.py) applied to it.
     if body.chatbotId not in bot_registry.KNOWN_BOT_IDS:
         raise HTTPException(status_code=400, detail="unknown-chatbot")
-    identity = (body.identity or "").strip().lower() or None
+    identity = _identity_for(body.identity, _human)
     try:
         usage.check(identity)
     except usage.BudgetExceeded as exc:
@@ -141,7 +192,7 @@ async def illustrate_endpoint(request: Request, body: IllustrateRequest, _human=
     a story scene -> one illustration in that story's art style."""
     if not config.KID_ART_ENABLED:
         raise HTTPException(status_code=503, detail="kid-art-disabled")
-    identity = (body.identity or "").strip().lower() or None
+    identity = _identity_for(body.identity, _human)
     try:
         usage.check(identity)
         usage.check_illustrate(identity)
@@ -165,22 +216,41 @@ async def illustrate_endpoint(request: Request, body: IllustrateRequest, _human=
     return {"image": f"data:{mime};base64,{image_b64}"}
 
 
-@app.post("/log")
-@limiter.limit("120/minute")
-async def log_endpoint(request: Request, body: LogMessageRequest, _human=Depends(require_human)):
-    # Previously had no auth at all: anyone could write arbitrary transcript rows
-    # (fake sessions, unlimited storage growth) into logs.db without ever having
-    # called /chat. Same human-verification gate as /chat and /illustrate now
-    # applies here too - see frontend/services/loggingService.ts for the matching
-    # Authorization header.
+@app.post("/log/session")
+@limiter.limit("20/minute;120/hour")
+async def log_session_endpoint(request: Request, body: LogSessionRequest, _human=Depends(require_human)):
+    # One request per finished conversation (S2). Human-verification gated like
+    # /chat and /illustrate so nobody can spray fake transcripts into logs.db.
+    # Idempotent per sessionId - see frontend/services/loggingService.ts.
     try:
-        database.log_message(
+        database.log_session(
             body.sessionId, body.chatbotId, body.chatbotTitle,
-            body.sender, body.message, body.sources,
+            [m.model_dump() for m in body.messages],
+            identity=body.identity, language=body.language,
         )
         return {"status": "success"}
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc))
+
+
+class ClientErrorRequest(BaseModel):
+    message: str = Field(default="", max_length=2000)
+    stack: str = Field(default="", max_length=8000)
+    url: str = Field(default="", max_length=500)
+    userAgent: str = Field(default="", max_length=500)
+
+
+@app.post("/client-error")
+@limiter.limit("10/minute;60/hour")
+async def client_error_endpoint(request: Request, body: ClientErrorRequest):
+    """A React render crash caught by the frontend ErrorBoundary (S3). Logged to
+    the server log only - not stored, no auth - purely so a white-screen bug is
+    visible in `docker logs` without a user having to report it."""
+    log.warning(
+        "client-error ua=%r url=%r msg=%r\n%s",
+        body.userAgent[:200], body.url, body.message, body.stack[:2000],
+    )
+    return {"status": "logged"}
 
 
 def _require_admin(x_admin_token: Optional[str] = Header(default=None)):
