@@ -1,9 +1,25 @@
+import re
 import sqlite3
 import json
 import os
 from datetime import datetime
 
 DB_PATH = "logs.db"
+
+# Many of MYRI's users are minors. /logs is admin-token gated, but a leaked
+# token or a DB backup shouldn't hand over anything a child typed that looks
+# like an email or phone number. Best-effort, not a substitute for keeping the
+# admin token secret - see backend/security.py.
+_EMAIL_RE = re.compile(r"[\w.+-]+@[\w-]+\.[\w.-]+")
+_PHONE_RE = re.compile(r"(?<!\d)(?:\+?\d[\s.-]?){7,15}(?!\d)")
+
+
+def _redact_pii(text: str | None) -> str | None:
+    if not text:
+        return text
+    text = _EMAIL_RE.sub("[email redacted]", text)
+    text = _PHONE_RE.sub("[number redacted]", text)
+    return text
 
 def init_db():
     conn = sqlite3.connect(DB_PATH)
@@ -28,7 +44,8 @@ def log_message(session_id, chatbot_id, chatbot_title, sender, message, sources=
     cursor = conn.cursor()
     timestamp = datetime.now().isoformat()
     sources_json = json.dumps(sources) if sources else None
-    
+    message = _redact_pii(message)
+
     cursor.execute('''
         INSERT INTO chat_logs (session_id, chatbot_id, chatbot_title, timestamp, sender, message, sources)
         VALUES (?, ?, ?, ?, ?, ?, ?)
