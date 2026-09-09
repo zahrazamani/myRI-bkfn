@@ -1,75 +1,55 @@
-# MyRI Project with RAG Backend
+# MyRI — My Real Intelligence
 
-This project has been restructured to include a Python backend for Retrieval-Augmented Generation (RAG).
+A set of Shia-sources-grounded chatbots for kids and teens. React frontend +
+FastAPI backend with retrieval-augmented generation over a local vector store.
 
 ## Structure
-- `frontend/`: The React application.
-- `backend/`: The Python FastAPI server and RAG logic.
 
-## Prerequisites
-- Node.js and npm
-- Python 3.9+
-- A Google Gemini API Key
+- `frontend/` — React + Vite single-page app.
+- `backend/` — FastAPI server: `/chat` (server-side Gemini calls + RAG), `/verify`
+  (Cloudflare Turnstile), `/query` (raw retrieval), `/log` + `/logs`.
+- `backend/generate_illustrations.py` — offline tool that builds the storybook
+  images for *The Lost Guardians' Club* (see `backend/illustrations/README.md`).
+- `deploy/` — one-container Docker stack + Oracle Cloud setup. See `DEPLOY.md`.
 
-## Setup and Running
+## How it works
 
-### 1. Backend Setup
-Navigate to the backend directory:
+1. The browser sends the conversation to the backend `POST /chat` — **no API key
+   in the frontend**.
+2. For grounded bots the backend embeds the question, checks a retrieval cache,
+   searches Chroma, reranks locally, and injects the top passages.
+3. The backend calls Gemini (`MYRI_CHAT_MODEL`, default `gemini-3.5-flash-lite`),
+   records token usage against the daily budget, and returns `{ text, sources }`.
+4. Rate limits (per-IP), a daily request/token ceiling, and optional Turnstile
+   keep pro-bono costs bounded.
+
+## Local development
+
+### Backend
+
 ```bash
 cd backend
-```
-
-Create a virtual environment (optional but recommended):
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
-
-Install dependencies:
-```bash
+python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
+cp .env.example .env          # set GEMINI_API_KEY
+python ingest.py              # after putting files in backend/documents/
+python main.py                # http://localhost:8000
 ```
 
-Create a `.env` file in the `backend/` directory and add your API key:
-```
-GEMINI_API_KEY=your_api_key_here
-```
+### Frontend
 
-### 2. Vectorize Documents
-To use your own documents for the chatbot:
-1. Place your `.txt` files in the `backend/documents/` folder.
-2. Run the ingestion script:
-```bash
-python ingest.py
-```
-This will split your documents into chunks and store them in a local vector database (`backend/chroma_db`).
-
-### 3. Run the Backend Server
-Start the FastAPI server:
-```bash
-python main.py
-```
-The server will run on `http://localhost:8000`.
-
-### 4. Run the Frontend
-Open a new terminal and navigate to the frontend directory:
 ```bash
 cd frontend
-```
-
-Install dependencies (if not already installed):
-```bash
 npm install
+cp .env.example .env          # VITE_API_BASE_URL=http://localhost:8000
+npm run dev                   # http://localhost:3000
 ```
 
-Start the development server:
-```bash
-npm run dev
-```
-The frontend will be available at `http://localhost:3000` (or whatever port Vite selects).
+## Configuration
 
-## How it Works
-1. When you chat with the "Journey & Beliefs" bot (id: `journey-beliefs`), the frontend sends your query to the backend (`POST /query`).
-2. The backend searches the vector database for relevant document chunks.
-3. The backend returns the relevant text context.
-4. The frontend sends this context along with your question to the Gemini API to generate an answer based on the documents.
+Everything is environment-driven — see `backend/.env.example` for the full list
+(model, retrieval, rate limits, budget caps, CORS, Turnstile, admin token).
+
+## Deployment
+
+See `DEPLOY.md` — Oracle Cloud Always-Free VM + Cloudflare, ~$0/month infra.
