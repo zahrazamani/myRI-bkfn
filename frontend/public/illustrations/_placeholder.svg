@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Illustration coming soon">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fde8c8"/>
+      <stop offset="0.55" stop-color="#f6c99a"/>
+      <stop offset="1" stop-color="#e8a87a"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#sky)"/>
+  <circle cx="400" cy="250" r="70" fill="#fff4e0" opacity="0.9"/>
+  <path d="M0 470 Q 200 400 400 460 T 800 440 V600 H0 Z" fill="#c9895e"/>
+  <path d="M0 520 Q 250 470 520 520 T 800 500 V600 H0 Z" fill="#a86b46"/>
+  <g fill="#7a4a2e" opacity="0.85">
+    <path d="M120 150 l14 -34 14 34 z"/>
+    <path d="M150 150 l10 -24 10 24 z"/>
+  </g>
+  <g fill="#5c3720">
+    <path d="M600 120 q8 -14 16 0 q10 -6 8 8 q10 4 -2 10 q2 12 -12 6 q-8 10 -14 -2 q-12 2 -8 -12 q-10 -8 4 -12 z"/>
+  </g>
+  <text x="400" y="330" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="34" fill="#5c3720" font-style="italic">An illustration is on its way…</text>
+  <text x="400" y="370" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="20" fill="#7a4a2e">The Lost Guardians’ Club</text>
+</svg>

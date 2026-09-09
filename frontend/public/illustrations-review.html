@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MYRI illustrations — review</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { margin: 0; font: 15px/1.5 system-ui, sans-serif; background: #f6f5f2; color: #1c1a17; }
+  header { padding: 20px 24px; background: #2b2622; color: #f6f5f2; position: sticky; top: 0; z-index: 2; }
+  header h1 { margin: 0 0 4px; font-size: 18px; }
+  header p { margin: 0; opacity: .8; font-size: 13px; }
+  header code { background: rgba(255,255,255,.12); padding: 1px 5px; border-radius: 4px; }
+  main { padding: 24px; max-width: 1200px; margin: 0 auto; }
+  section { margin-bottom: 40px; }
+  h2 { font-size: 16px; border-bottom: 2px solid #d8d2c8; padding-bottom: 6px; }
+  h2 small { font-weight: 400; color: #7a726a; }
+  .scene { margin: 18px 0; }
+  .scene > b { font-family: ui-monospace, monospace; font-size: 11px; color: #9a8c7a; }
+  .scene > span { font-size: 13px; }
+  .variants { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+  figure { margin: 0; width: 240px; background: #fff; border: 1px solid #e2ddd4; border-radius: 10px; overflow: hidden; }
+  figure img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: #eee; }
+  figcaption { padding: 6px 9px; font-size: 12px; font-family: ui-monospace, monospace; color: #7a726a; }
+  .missing { width: 240px; aspect-ratio: 4/3; border: 2px dashed #c98; border-radius: 10px;
+             display: grid; place-items: center; color: #b58; font-size: 13px; }
+  @media (prefers-color-scheme: dark) {
+    body { background: #17150f; color: #ece7dd; }
+    figure { background: #221f18; border-color: #3a352b; }
+    h2 { border-color: #3a352b; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>The Lost Guardians' Club — illustration review</h1>
+  <p>Serve this folder (e.g. <code>npm run dev</code>) and open it. Regenerate a scene with
+     <code>python generate_illustrations.py --only &lt;id&gt; --overwrite</code>,
+     add a variant with <code>--story &lt;id&gt; --variants 2</code>.</p>
+</header>
+<main id="app">Loading manifest…</main>
+<script>
+const app = document.getElementById('app');
+
+fetch('/illustrations/manifest.json')
+  .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then((data) => {
+    app.innerHTML = '';
+    let total = 0, withImg = 0, images = 0;
+    for (const story of data.stories) {
+      const s = document.createElement('section');
+      s.innerHTML = `<h2>${story.title} <small>— ${story.animal} · ${story.id}</small></h2>`;
+      for (const scene of story.scenes) {
+        total++;
+        const letters = scene.variants || [];
+        if (letters.length) withImg++;
+        images += letters.length;
+        const div = document.createElement('div');
+        div.className = 'scene';
+        div.innerHTML = `<b>${scene.id}</b> <span>— ${scene.caption}</span>`;
+        const wrap = document.createElement('div');
+        wrap.className = 'variants';
+        if (!letters.length) {
+          wrap.innerHTML = `<div class="missing">not generated</div>`;
+        } else {
+          for (const L of letters) {
+            const fig = document.createElement('figure');
+            fig.innerHTML = `<img loading="lazy" src="/illustrations/${story.id}/${scene.n}/${L}.jpg">
+              <figcaption>${scene.id} · variant ${L}</figcaption>`;
+            wrap.appendChild(fig);
+          }
+        }
+        div.appendChild(wrap);
+        s.appendChild(div);
+      }
+      app.appendChild(s);
+    }
+    const h = document.createElement('p');
+    h.textContent = `${withImg}/${total} scenes have art · ${images} images total`;
+    app.prepend(h);
+  })
+  .catch((e) => { app.textContent = 'Could not load /illustrations/manifest.json — run generate_illustrations.py --write-manifest. (' + e + ')'; });
+</script>
+</body>
+</html>

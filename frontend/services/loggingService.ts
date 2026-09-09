@@ -1,5 +1,6 @@
 import type { ChatMessage, Chatbot } from '../types';
 import { CHATBOTS } from '../constants';
+import { getHumanToken } from './geminiService';
 
 
 const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
@@ -40,13 +41,15 @@ export const logChat = async (chatbotId: string, messages: ChatMessage[]): Promi
   // To avoid spamming requests, we could update the backend to accept a batch.
   // But strictly following the current backend `log_message` signature:
 
+  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+  const token = getHumanToken();
+  if (token) headers.Authorization = `Bearer ${token}`;
+
   for (const msg of messages) {
     try {
       await fetch(`${API_URL}/log`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers,
         body: JSON.stringify({
           sessionId,
           chatbotId,

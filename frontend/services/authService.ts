@@ -1,48 +1,62 @@
-// A simple list of approved access codes.
-// In a real-world application, this would be managed by a secure backend system.
-const APPROVED_CODES = ['Bagheri1404', 'Zamani1404', 'Motevallian1404', 'GUEST1404'];
-const AUTH_TOKEN_KEY = 'mri-auth-token';
+// Authentication is by email address.
+// The user identifies themselves with their email; it is stored locally and
+// used to identify their chat sessions. There is no password / server-side
+// verification yet — this is a lightweight client-side identity.
+const AUTH_EMAIL_KEY = 'mri-user-email';
+
+// Simple, permissive email shape check: something@something.tld
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /**
- * Attempts to log in a user with an access code.
- * @param accessCode - The code entered by the user.
- * @returns True if the code is valid, false otherwise.
+ * Checks whether a string looks like a valid email address.
  */
-export const login = (accessCode: string): boolean => {
-  if (APPROVED_CODES.includes(accessCode.trim())) {
-    try {
-      localStorage.setItem(AUTH_TOKEN_KEY, accessCode.trim());
-      return true;
-    } catch (error) {
-      console.error("Could not save to localStorage", error);
-      // If localStorage is not available, the session will not be persisted.
-      return true;
-    }
+export const isValidEmail = (email: string): boolean => EMAIL_REGEX.test(email.trim());
+
+/**
+ * Attempts to log a user in with their email address.
+ * @param email - The email entered by the user.
+ * @returns True if the email is valid (and was stored), false otherwise.
+ */
+export const login = (email: string): boolean => {
+  const normalized = email.trim().toLowerCase();
+  if (!isValidEmail(normalized)) {
+    return false;
   }
-  return false;
+  try {
+    localStorage.setItem(AUTH_EMAIL_KEY, normalized);
+  } catch (error) {
+    console.error("Could not save to localStorage", error);
+    // If localStorage is unavailable, the session just won't persist.
+  }
+  return true;
 };
 
 /**
- * Logs out the current user by removing their token from localStorage.
+ * Logs out the current user by removing their email from localStorage.
  */
 export const logout = (): void => {
   try {
-    localStorage.removeItem(AUTH_TOKEN_KEY);
+    localStorage.removeItem(AUTH_EMAIL_KEY);
   } catch (error) {
     console.error("Could not remove from localStorage", error);
   }
 };
 
 /**
- * Checks if the current user is authenticated.
- * @returns True if a valid access code is found in localStorage, false otherwise.
+ * Returns the currently logged-in user's email, or null if not logged in.
  */
-export const isAuthenticated = (): boolean => {
+export const getCurrentUser = (): string | null => {
   try {
-    const token = localStorage.getItem(AUTH_TOKEN_KEY);
-    return token !== null && APPROVED_CODES.includes(token);
+    const email = localStorage.getItem(AUTH_EMAIL_KEY);
+    return email && isValidEmail(email) ? email : null;
   } catch (error) {
     console.error("Could not read from localStorage", error);
-    return false;
+    return null;
   }
 };
+
+/**
+ * Checks if the current user is authenticated.
+ * @returns True if a valid email is stored, false otherwise.
+ */
+export const isAuthenticated = (): boolean => getCurrentUser() !== null;

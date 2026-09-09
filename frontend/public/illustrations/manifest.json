@@ -1,0 +1,1042 @@
+{
+  "stories": [
+    {
+      "id": "cave-spider",
+      "title": "The Weaver's Secret Shield",
+      "animal": "The Cave Spider",
+      "scenes": [
+        {
+          "id": "cave-spider-01",
+          "n": "01",
+          "caption": "A moonlit desert path winding toward a dark mountain",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "cave-spider-02",
+          "n": "02",
+          "caption": "The low cave mouth at night under the stars",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "cave-spider-03",
+          "n": "03",
+          "caption": "A small spider arrives at the cave entrance",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "cave-spider-04",
+          "n": "04",
+          "caption": "The spider weaves a web across the cave mouth",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "cave-spider-05",
+          "n": "05",
+          "caption": "A pair of doves nest on a ledge by the entrance",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "cave-spider-06",
+          "n": "06",
+          "caption": "The finished web glistens at dawn, dew on the threads",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "cave-spider-07",
+          "n": "07",
+          "caption": "Armed riders approach the foot of the mountain",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "cave-spider-08",
+          "n": "08",
+          "caption": "The pursuers peer at the untouched web and turn away",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "cave-spider-09",
+          "n": "09",
+          "caption": "The quiet interior of the cave, a shaft of light",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "cave-spider-10",
+          "n": "10",
+          "caption": "Morning light floods the valley, birds rising",
+          "variants": [
+            "a"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cave-dog",
+      "title": "The Loyal Guardian's Vigil",
+      "animal": "The Dog of the Companions of the Cave",
+      "scenes": [
+        {
+          "id": "cave-dog-01",
+          "n": "01",
+          "caption": "Young companions walk a hill road at sunset with their dog",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "cave-dog-02",
+          "n": "02",
+          "caption": "The group enters a great mountain cave; the dog pauses at the threshold",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "cave-dog-03",
+          "n": "03",
+          "caption": "The dog lies across the entrance, forelegs outstretched, on guard",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "cave-dog-04",
+          "n": "04",
+          "caption": "A sunbeam crosses the cave as years pass",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "cave-dog-05",
+          "n": "05",
+          "caption": "The sleepers rest wrapped in cloaks; the dog watches over them",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "cave-dog-06",
+          "n": "06",
+          "caption": "The mountainside outside moves through the seasons",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "cave-dog-07",
+          "n": "07",
+          "caption": "An ancient, unfamiliar silver coin in an open palm",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "cave-dog-08",
+          "n": "08",
+          "caption": "The town below has changed, with new rooftops and a dome",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "cave-dog-09",
+          "n": "09",
+          "caption": "Bright light and dust as the sleepers wake; the dog stands alert",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "cave-dog-10",
+          "n": "10",
+          "caption": "A simple stone marker and garden by the cave, visitors far off",
+          "variants": [
+            "a"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hoopoe",
+      "title": "The Royal Messenger's Ancient News",
+      "animal": "The Hoopoe of Solomon",
+      "scenes": [
+        {
+          "id": "hoopoe-01",
+          "n": "01",
+          "caption": "A vivid hoopoe with its crest raised, perched on a carved pillar",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "hoopoe-02",
+          "n": "02",
+          "caption": "A grand open-air court of birds; an empty ornate throne at the top",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "hoopoe-03",
+          "n": "03",
+          "caption": "One gap among the assembled birds, a shaft of light on the empty spot",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "hoopoe-04",
+          "n": "04",
+          "caption": "The hoopoe flies high over mountains and green valleys, searching",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "hoopoe-05",
+          "n": "05",
+          "caption": "From the air: a golden city with terraced gardens and a great palace",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "hoopoe-06",
+          "n": "06",
+          "caption": "The hoopoe glides down toward the palace carrying a sealed letter",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "hoopoe-07",
+          "n": "07",
+          "caption": "The sealed scroll rests on a polished throne-room floor",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "hoopoe-08",
+          "n": "08",
+          "caption": "The court of Sheba debates around the scroll",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "hoopoe-09",
+          "n": "09",
+          "caption": "The hoopoe flies home over the desert at sunset",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "hoopoe-10",
+          "n": "10",
+          "caption": "Back before the assembly of birds, the empty throne still waiting",
+          "variants": [
+            "a"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "raven",
+      "title": "The First Lesson of the Wise Crow",
+      "animal": "The Raven of the Sons of Adam",
+      "scenes": [
+        {
+          "id": "raven-01",
+          "n": "01",
+          "caption": "A wide barren land at dusk, two distant figures apart on a ridge",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "raven-02",
+          "n": "02",
+          "caption": "Two offerings on flat stones on a hilltop",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "raven-03",
+          "n": "03",
+          "caption": "A lone figure kneels beside a still, cloak-covered form",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "raven-04",
+          "n": "04",
+          "caption": "A glossy black raven lands on a rock nearby",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "raven-05",
+          "n": "05",
+          "caption": "A second raven lies still on the ground; the living one approaches",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "raven-06",
+          "n": "06",
+          "caption": "The raven digs a hollow in the dark earth",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "raven-07",
+          "n": "07",
+          "caption": "The raven pushes soil over the hollow, making a small mound",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "raven-08",
+          "n": "08",
+          "caption": "The kneeling figure watches the raven, one hand lifted to the head",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "raven-09",
+          "n": "09",
+          "caption": "A fresh earth mound with a single rough headstone on the plain",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "raven-10",
+          "n": "10",
+          "caption": "The wide plain at last light, the raven flying off against a huge sky",
+          "variants": [
+            "a"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "elephant",
+      "title": "The Mighty Elephant's Sacred Refusal",
+      "animal": "The Elephant of the Army of the Elephant",
+      "scenes": [
+        {
+          "id": "elephant-01",
+          "n": "01",
+          "caption": "A vast army with a towering war elephant marches across the desert",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "elephant-02",
+          "n": "02",
+          "caption": "Close-up of the great armoured elephant, handlers small below",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "elephant-03",
+          "n": "03",
+          "caption": "The army halts at a wide valley; a small plain stone sanctuary far off",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "elephant-04",
+          "n": "04",
+          "caption": "The huge elephant kneels in the sand and refuses to advance",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "elephant-05",
+          "n": "05",
+          "caption": "Turned any other way, the elephant walks eagerly",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "elephant-06",
+          "n": "06",
+          "caption": "A strange shadow spreads as tiny birds appear on the horizon",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "elephant-07",
+          "n": "07",
+          "caption": "Great flocks of small birds fill the sky, each carrying tiny stones",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "elephant-08",
+          "n": "08",
+          "caption": "Small stones streak down; the army scatters in the dust",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "elephant-09",
+          "n": "09",
+          "caption": "The empty plain after: abandoned banners, drifting sand, the elephant alone",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "elephant-10",
+          "n": "10",
+          "caption": "Calm golden dawn over the untouched stone sanctuary",
+          "variants": [
+            "a"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ant",
+      "title": "Tiny Queen's Urgent Whisper",
+      "animal": "The Ant of the Valley",
+      "scenes": [
+        {
+          "id": "ant-01",
+          "n": "01",
+          "caption": "A sweeping low view of a dry valley full of anthills and ant trails",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "ant-02",
+          "n": "02",
+          "caption": "On the far horizon, a long column of marchers raising a wall of dust",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "ant-03",
+          "n": "03",
+          "caption": "A single ant rears up on a pebble, antennae forward, sensing the ground",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "ant-04",
+          "n": "04",
+          "caption": "The ant turns back to the colony; other ants stop to listen",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "ant-05",
+          "n": "05",
+          "caption": "Streams of ants pour back toward their hills carrying eggs and grain",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "ant-06",
+          "n": "06",
+          "caption": "Close-up of the anthill entrance, ants funnelling safely underground",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "ant-07",
+          "n": "07",
+          "caption": "Extreme low angle: a vast shadow passes over the anthill",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "ant-08",
+          "n": "08",
+          "caption": "Warm light returns; the distant column pauses, a gentle amusement",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "ant-09",
+          "n": "09",
+          "caption": "Cutaway of cozy underground tunnels, the whole colony safe, the queen among them",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "ant-10",
+          "n": "10",
+          "caption": "The valley quiet again, ants re-emerging into golden evening light",
+          "variants": [
+            "a"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "camel",
+      "title": "The Test of the Sacred Spring",
+      "animal": "The She-Camel of Salih",
+      "scenes": [
+        {
+          "id": "camel-01",
+          "n": "01",
+          "caption": "The cliff-city of Thamud carved into red mountains",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "camel-02",
+          "n": "02",
+          "caption": "A crowd gathers before a great sealed rock",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "camel-03",
+          "n": "03",
+          "caption": "The rock splits open with light and dust",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "camel-04",
+          "n": "04",
+          "caption": "A magnificent she-camel emerges from the cleft rock",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "camel-05",
+          "n": "05",
+          "caption": "The she-camel drinks the whole spring dry",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "camel-06",
+          "n": "06",
+          "caption": "The next day the water returns and the camel grazes",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "camel-07",
+          "n": "07",
+          "caption": "Schemers watch the camel from behind the rocks",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "camel-08",
+          "n": "08",
+          "caption": "At dawn the spring is empty and the camel is gone",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "camel-09",
+          "n": "09",
+          "caption": "A dark sky rolls toward the cliff-homes",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "camel-10",
+          "n": "10",
+          "caption": "Silent empty doorways and hoofprints filling with sand",
+          "variants": [
+            "a"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cow",
+      "title": "The Cow of a Hundred Questions",
+      "animal": "The Cow of Bani Israel",
+      "scenes": [
+        {
+          "id": "cow-01",
+          "n": "01",
+          "caption": "An ancient town at night with one lit window",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "cow-02",
+          "n": "02",
+          "caption": "A crowd argues in the dusty square",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "cow-03",
+          "n": "03",
+          "caption": "Herds of cattle graze by the river",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "cow-04",
+          "n": "04",
+          "caption": "One radiant golden cow stands apart in a barley field",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "cow-05",
+          "n": "05",
+          "caption": "The golden cow is led through the town gate",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "cow-06",
+          "n": "06",
+          "caption": "The cow stands calm in a ring of onlookers at dawn",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "cow-07",
+          "n": "07",
+          "caption": "A quiet miracle of light in the square",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "cow-08",
+          "n": "08",
+          "caption": "The crowd disperses in silence",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "cow-09",
+          "n": "09",
+          "caption": "The golden cow grazes again by the river",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "cow-10",
+          "n": "10",
+          "caption": "The pasture and river at golden hour",
+          "variants": [
+            "a"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "calf",
+      "title": "The Statue That Could Not Speak",
+      "animal": "The Golden Calf of the Samiri",
+      "scenes": [
+        {
+          "id": "calf-01",
+          "n": "01",
+          "caption": "A desert camp at the foot of a bare mountain",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "calf-02",
+          "n": "02",
+          "caption": "People pile golden jewellery onto a cloth",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "calf-03",
+          "n": "03",
+          "caption": "Molten gold pours into a mould",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "calf-04",
+          "n": "04",
+          "caption": "The finished golden calf statue on a stone platform",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "calf-05",
+          "n": "05",
+          "caption": "Crowds bow toward the golden calf",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "calf-06",
+          "n": "06",
+          "caption": "The calf casts a long hollow shadow in the wind",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "calf-07",
+          "n": "07",
+          "caption": "A stern figure returns down the mountain path",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "calf-08",
+          "n": "08",
+          "caption": "The golden calf toppled on its side",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "calf-09",
+          "n": "09",
+          "caption": "Gold filings wash away in the river",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "calf-10",
+          "n": "10",
+          "caption": "The quiet camp at dawn, the platform empty",
+          "variants": [
+            "a"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fish",
+      "title": "The Whale's Dark Belly",
+      "animal": "The Whale of Yunus",
+      "scenes": [
+        {
+          "id": "fish-01",
+          "n": "01",
+          "caption": "A wooden ship pitches on a huge night sea",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "fish-02",
+          "n": "02",
+          "caption": "Lots are drawn on the heaving deck",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "fish-03",
+          "n": "03",
+          "caption": "A figure goes into the black water",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "fish-04",
+          "n": "04",
+          "caption": "An enormous whale rises from the deep",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "fish-05",
+          "n": "05",
+          "caption": "Inside the whale, a single shaft of green light",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "fish-06",
+          "n": "06",
+          "caption": "Ribbons of light spiral upward as he prays",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "fish-07",
+          "n": "07",
+          "caption": "The whale glides through a moonlit ocean",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "fish-08",
+          "n": "08",
+          "caption": "The whale gently sets its passenger on the shore",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "fish-09",
+          "n": "09",
+          "caption": "A broad-leafed gourd vine grows over the resting figure",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "fish-10",
+          "n": "10",
+          "caption": "Sunrise over a calm sea, the whale's tail slipping under",
+          "variants": [
+            "a"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee",
+      "title": "The Little Architect's Secret",
+      "animal": "The Bee",
+      "scenes": [
+        {
+          "id": "bee-01",
+          "n": "01",
+          "caption": "A wildflower meadow on a mountainside at golden hour",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "bee-02",
+          "n": "02",
+          "caption": "A single honeybee lifts off a blossom",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "bee-03",
+          "n": "03",
+          "caption": "The bee's-eye flight over the valley",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "bee-04",
+          "n": "04",
+          "caption": "Bees dance on the comb to share directions",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "bee-05",
+          "n": "05",
+          "caption": "A cutaway of the wax comb's perfect hexagons",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "bee-06",
+          "n": "06",
+          "caption": "Bees fan the comb with their wings",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "bee-07",
+          "n": "07",
+          "caption": "A beekeeper's distant silhouette sets a woven skep",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "bee-08",
+          "n": "08",
+          "caption": "Amber honey drips from a piece of comb",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "bee-09",
+          "n": "09",
+          "caption": "A clay jar of honey glows on a stone sill",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "bee-10",
+          "n": "10",
+          "caption": "The meadow at dusk, bees streaming home",
+          "variants": [
+            "a"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "donkey",
+      "title": "The Sleeper of a Hundred Years",
+      "animal": "The Donkey of Uzayr",
+      "scenes": [
+        {
+          "id": "donkey-01",
+          "n": "01",
+          "caption": "A traveller on a donkey approaches a ruined town",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "donkey-02",
+          "n": "02",
+          "caption": "The rider dismounts among broken walls",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "donkey-03",
+          "n": "03",
+          "caption": "The rider rests in the shade while the donkey grazes",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "donkey-04",
+          "n": "04",
+          "caption": "Sun and moon streak across the sky over the ruins",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "donkey-05",
+          "n": "05",
+          "caption": "White bones of the donkey lie in the grass; the figs remain",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "donkey-06",
+          "n": "06",
+          "caption": "Light returns and the figure stirs",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "donkey-07",
+          "n": "07",
+          "caption": "The figs and waterskin are still perfectly fresh",
+          "variants": [
+            "a"
+          ]
+        },
+        {
+          "id": "donkey-08",
+          "n": "08",
+          "caption": "The scattered bones draw together in a soft glow",
+          "variants": []
+        },
+        {
+          "id": "donkey-09",
+          "n": "09",
+          "caption": "A living donkey stands again",
+          "variants": []
+        },
+        {
+          "id": "donkey-10",
+          "n": "10",
+          "caption": "The rebuilt green town in the distance at golden hour",
+          "variants": []
+        }
+      ]
+    }
+  ]
+}
