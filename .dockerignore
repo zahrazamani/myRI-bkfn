@@ -18,9 +18,11 @@ dist/
 build/
 
 # --- runtime data / caches (live on the mounted /data volume, not the image) ---
+# NB: rag_cache.py's cache lives *inside* logs.db (already excluded below), not
+# a separate file - a prior "backend/rag_cache*" line here also matched
+# rag_cache.py itself and silently dropped that module from every image.
 backend/logs.db
 backend/*.sqlite3
-backend/rag_cache*
 backend/hf-cache/
 backend/exports/
 **/__pycache__/
