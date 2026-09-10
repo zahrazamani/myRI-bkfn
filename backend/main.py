@@ -3,7 +3,7 @@ import os
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 from slowapi import _rate_limit_exceeded_handler
@@ -271,18 +271,13 @@ async def clear_logs_endpoint():
 
 
 # --------------------------------------------------------------------- static
+# Serve the whole built frontend from one mount: index.html at "/", plus every
+# static asset Vite emits into dist/ (/assets, /illustrations, /bots, /bg.jpg,
+# /vite.svg, ...). Mounted last, after every API route above, so those still win.
+# html=True makes StaticFiles return index.html for "/".
 frontend_dist = os.path.join(os.path.dirname(__file__), "../frontend/dist")
 if os.path.isdir(frontend_dist):
-    assets_dir = os.path.join(frontend_dist, "assets")
-    if os.path.isdir(assets_dir):
-        app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
-    illus_dir = os.path.join(frontend_dist, "illustrations")
-    if os.path.isdir(illus_dir):
-        app.mount("/illustrations", StaticFiles(directory=illus_dir), name="illustrations")
-
-    @app.get("/")
-    async def serve_index():
-        return FileResponse(os.path.join(frontend_dist, "index.html"))
+    app.mount("/", StaticFiles(directory=frontend_dist, html=True), name="frontend")
 
 
 if __name__ == "__main__":
